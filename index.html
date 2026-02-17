@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Umbramed — EIC 2026</title>
+  <title>Umbramed — Proyecto EIC 2026</title>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -16,315 +17,369 @@
       --font: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
     }
 
-    body {
-      font-family: var(--font);
-      background: var(--bg);
-      color: var(--text);
-      font-size: 14px;
-      line-height: 1.5;
-    }
+    body { font-family: var(--font); background: var(--bg); color: var(--text); font-size: 14px; }
 
-    .wrap {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 40px 24px;
-    }
+    /* ── Dashboard ── */
+    #dashboard { max-width: 740px; margin: 0 auto; padding: 48px 24px; }
 
-    /* Header */
-    header {
-      margin-bottom: 32px;
-    }
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 6px;
-    }
+    header { margin-bottom: 36px; }
+    .logo  { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
     .logo-mark {
-      width: 32px; height: 32px;
-      background: var(--text);
-      color: #fff;
-      border-radius: 6px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: -0.5px;
+      width: 34px; height: 34px; background: var(--text); color: #fff;
+      border-radius: 6px; display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 700;
     }
-    h1 { font-size: 18px; font-weight: 700; letter-spacing: -0.3px; }
-    .sub { color: var(--muted); font-size: 13px; margin-top: 2px; }
+    h1 { font-size: 20px; font-weight: 700; letter-spacing: -0.4px; }
+    .sub { color: var(--muted); font-size: 13.5px; line-height: 1.6; margin-top: 4px; }
 
     /* Stats */
     .stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1px;
-      background: var(--border);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      overflow: hidden;
-      margin-bottom: 24px;
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 1px; background: var(--border);
+      border: 1px solid var(--border); border-radius: 8px;
+      overflow: hidden; margin-bottom: 32px;
     }
-    .stat {
-      background: var(--surface);
-      padding: 16px 20px;
-    }
+    .stat { background: var(--surface); padding: 16px 20px; }
     .stat-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; margin-bottom: 4px; }
-    .stat-value { font-size: 20px; font-weight: 700; letter-spacing: -0.5px; }
-    .stat-sub   { font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .stat-value { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; }
+    .stat-sub   { font-size: 12px; color: var(--muted); margin-top: 3px; line-height: 1.4; }
 
     /* Section */
-    .section { margin-bottom: 24px; }
-    .section-title {
-      font-size: 11px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--muted);
-      margin-bottom: 8px;
-    }
+    .section { margin-bottom: 28px; }
+    .section-title { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-bottom: 8px; }
 
     /* Card */
-    .card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      overflow: hidden;
-    }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
 
-    /* File list */
-    .file-row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 11px 16px;
-      border-bottom: 1px solid var(--border);
-      text-decoration: none;
-      color: var(--text);
+    /* Doc rows */
+    .doc-row {
+      display: flex; align-items: center; gap: 14px;
+      padding: 13px 18px; border-bottom: 1px solid var(--border);
+      cursor: pointer; text-decoration: none; color: var(--text);
     }
-    .file-row:last-child { border-bottom: none; }
-    .file-row:hover { background: var(--bg); }
-    .file-icon { font-size: 16px; width: 20px; flex-shrink: 0; }
-    .file-name { font-size: 13px; font-weight: 500; flex: 1; }
-    .file-tag {
-      font-size: 11px;
-      color: var(--muted);
+    .doc-row:last-child { border-bottom: none; }
+    .doc-row:hover { background: var(--bg); }
+    .doc-row:hover .doc-arrow { opacity: 1; }
+    .doc-icon { font-size: 18px; flex-shrink: 0; }
+    .doc-info { flex: 1; }
+    .doc-name { font-size: 13.5px; font-weight: 500; }
+    .doc-desc { font-size: 12px; color: var(--muted); margin-top: 2px; line-height: 1.4; }
+    .doc-arrow { color: var(--muted); font-size: 14px; opacity: 0.4; transition: opacity 0.1s; }
+
+    /* Task rows */
+    .task-row {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 11px 18px; border-bottom: 1px solid var(--border);
+    }
+    .task-row:last-child { border-bottom: none; }
+    .task-dot {
+      width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 5px;
+      border: 1.5px solid #d4d4d8; background: #fff;
+    }
+    .task-dot.hecho   { background: #16a34a; border-color: #16a34a; }
+    .task-dot.urgente { background: #ef4444; border-color: #ef4444; }
+    .task-text { flex: 1; }
+    .task-title { font-size: 13px; font-weight: 500; }
+    .task-title.hecho { text-decoration: line-through; color: var(--muted); font-weight: 400; }
+    .task-exp   { font-size: 12px; color: var(--muted); margin-top: 2px; line-height: 1.4; }
+    .task-fecha { font-size: 11px; color: #a1a1aa; margin-top: 4px; font-weight: 500; }
+
+    /* ── Document viewer ── */
+    #viewer {
+      display: none;
+      min-height: 100vh;
       background: var(--bg);
-      border: 1px solid var(--border);
-      padding: 1px 7px;
-      border-radius: 9999px;
     }
-    .file-arrow { color: var(--muted); font-size: 12px; }
 
-    /* Checklist */
-    .check-row {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      padding: 9px 16px;
-      border-bottom: 1px solid var(--border);
+    .viewer-topbar {
+      position: sticky; top: 0; z-index: 10;
+      background: var(--surface); border-bottom: 1px solid var(--border);
+      padding: 10px 24px;
+      display: flex; align-items: center; gap: 12px;
     }
-    .check-row:last-child { border-bottom: none; }
-    .dot {
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: var(--border);
-      border: 1.5px solid #d4d4d8;
-      flex-shrink: 0;
-      margin-top: 6px;
-    }
-    .dot.done { background: #16a34a; border-color: #16a34a; }
-    .dot.high { background: #ef4444; border-color: #ef4444; }
-    .check-text { font-size: 13px; flex: 1; }
-    .check-text.done { color: var(--muted); text-decoration: line-through; }
-    .check-meta { font-size: 11px; color: var(--muted); margin-top: 1px; }
-
-    /* Links grid */
-    .links-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-    }
-    .link-card {
-      display: block;
-      padding: 12px 14px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 8px;
+    .viewer-back {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 13px; color: var(--muted);
+      cursor: pointer; padding: 4px 8px; border-radius: 5px;
+      border: 1px solid var(--border); background: var(--bg);
       text-decoration: none;
-      color: var(--text);
     }
-    .link-card:hover { background: var(--bg); }
-    .link-card-name { font-size: 13px; font-weight: 500; }
-    .link-card-sub  { font-size: 11px; color: var(--muted); margin-top: 2px; }
+    .viewer-back:hover { background: var(--border); color: var(--text); }
+    .viewer-title { font-size: 13px; font-weight: 500; color: var(--muted); }
+
+    .viewer-body {
+      max-width: 720px; margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+
+    /* Markdown rendering */
+    .prose h1 { font-size: 24px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 8px; line-height: 1.2; }
+    .prose h2 { font-size: 18px; font-weight: 600; letter-spacing: -0.3px; margin-top: 36px; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+    .prose h3 { font-size: 15px; font-weight: 600; margin-top: 24px; margin-bottom: 8px; }
+    .prose h4 { font-size: 13.5px; font-weight: 600; margin-top: 16px; margin-bottom: 6px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; font-size: 11px; }
+    .prose p  { font-size: 14px; line-height: 1.75; color: #27272a; margin-bottom: 14px; }
+    .prose ul, .prose ol { padding-left: 20px; margin-bottom: 14px; }
+    .prose li { font-size: 14px; line-height: 1.75; color: #27272a; margin-bottom: 4px; }
+    .prose li > ul, .prose li > ol { margin-bottom: 0; margin-top: 4px; }
+    .prose strong { font-weight: 600; color: var(--text); }
+    .prose em { font-style: italic; }
+    .prose blockquote {
+      border-left: 3px solid var(--border);
+      padding: 8px 16px; margin: 16px 0;
+      background: var(--bg); border-radius: 0 6px 6px 0;
+      color: var(--muted);
+    }
+    .prose blockquote p { margin-bottom: 0; color: var(--muted); }
+    .prose code {
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 12.5px; background: var(--bg);
+      border: 1px solid var(--border); border-radius: 3px;
+      padding: 1px 5px; color: #27272a;
+    }
+    .prose pre {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 6px; padding: 14px 16px; overflow-x: auto;
+      margin-bottom: 16px;
+    }
+    .prose pre code { border: none; background: none; padding: 0; font-size: 12.5px; }
+    .prose table {
+      width: 100%; border-collapse: collapse; margin-bottom: 16px;
+      font-size: 13px;
+    }
+    .prose th {
+      background: var(--bg); border: 1px solid var(--border);
+      padding: 7px 12px; text-align: left; font-weight: 600;
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted);
+    }
+    .prose td { border: 1px solid var(--border); padding: 7px 12px; vertical-align: top; }
+    .prose tr:hover td { background: var(--bg); }
+    .prose hr { border: none; border-top: 1px solid var(--border); margin: 28px 0; }
+    .prose a { color: var(--text); text-decoration: underline; text-decoration-color: var(--border); }
+    .prose a:hover { text-decoration-color: var(--muted); }
+
+    /* Loading */
+    .loading { text-align: center; padding: 60px 0; color: var(--muted); font-size: 13px; }
 
     @media (max-width: 600px) {
       .stats { grid-template-columns: 1fr; }
-      .links-grid { grid-template-columns: repeat(2, 1fr); }
+      .viewer-body { padding: 32px 16px 60px; }
     }
   </style>
 </head>
 <body>
-<div class="wrap">
+
+<!-- ── DASHBOARD ── -->
+<div id="dashboard">
 
   <header>
     <div class="logo">
       <div class="logo-mark">UM</div>
-      <h1>Umbramed</h1>
+      <h1>Umbramed — Proyecto EIC 2026</h1>
     </div>
-    <div class="sub">EIC Accelerator — Horizon Europe 2026 · Deadline Oct 2026</div>
+    <p class="sub">
+      Este es el panel central del proyecto. Umbramed es un software de IA que ayuda a médicos como Valerio a reducir el tiempo administrativo (recetas, informes, derivaciones) de <strong>2 horas al día</strong> a menos de 10 minutos. Estamos solicitando financiación europea de hasta <strong>€17,5M</strong> para validarlo clínicamente y escalarlo.
+    </p>
   </header>
 
   <!-- Stats -->
   <div class="stats">
     <div class="stat">
-      <div class="stat-label">EIC Grant</div>
-      <div class="stat-value">€2.5M</div>
-      <div class="stat-sub">+ €15M equity option</div>
+      <div class="stat-label">Financiación objetivo</div>
+      <div class="stat-value">€2,5M</div>
+      <div class="stat-sub">Grant EIC + opción €15M equity</div>
     </div>
     <div class="stat">
-      <div class="stat-label">Deadline</div>
+      <div class="stat-label">Fecha límite</div>
       <div class="stat-value">Oct 2026</div>
-      <div class="stat-sub">~245 days</div>
+      <div class="stat-sub">~245 días para entregar la solicitud</div>
     </div>
     <div class="stat">
-      <div class="stat-label">Documents</div>
-      <div class="stat-value">6 ready</div>
-      <div class="stat-sub">3 sections pending</div>
+      <div class="stat-label">Tu papel, Valerio</div>
+      <div class="stat-value">IP del estudio</div>
+      <div class="stat-sub">Sin un médico visible, la probabilidad de éxito baja del 20% al 5%</div>
     </div>
   </div>
 
   <!-- Documents -->
   <div class="section">
-    <div class="section-title">Documents</div>
+    <div class="section-title">Documentos del proyecto</div>
     <div class="card">
-      <a class="file-row" href="public/VALERIO_PLAN_ACCION_EJECUTIVO.md" target="_blank">
-        <span class="file-icon">🗺️</span>
-        <span class="file-name">Action Plan Ejecutivo</span>
-        <span class="file-tag">Strategy</span>
-        <span class="file-arrow">↗</span>
-      </a>
-      <a class="file-row" href="public/CLINICAL_PROTOCOL_UMBRAMED.md" target="_blank">
-        <span class="file-icon">🏥</span>
-        <span class="file-name">Clinical Protocol Umbramed</span>
-        <span class="file-tag">Clinical</span>
-        <span class="file-arrow">↗</span>
-      </a>
-      <a class="file-row" href="public/UMBRAMED_Clinical_Protocol_v1.2.md" target="_blank">
-        <span class="file-icon">🔬</span>
-        <span class="file-name">Clinical Protocol v1.2</span>
-        <span class="file-tag">Clinical</span>
-        <span class="file-arrow">↗</span>
-      </a>
-      <a class="file-row" href="public/VALERIO_VIDEO_SCRIPT_EIC.md" target="_blank">
-        <span class="file-icon">🎬</span>
-        <span class="file-name">Video Script EIC</span>
-        <span class="file-tag">Pitch</span>
-        <span class="file-arrow">↗</span>
-      </a>
-      <a class="file-row" href="public/VIDEO_SCRIPT_UMBRAMED_EN.md" target="_blank">
-        <span class="file-icon">🌐</span>
-        <span class="file-name">Video Script EN</span>
-        <span class="file-tag">Pitch</span>
-        <span class="file-arrow">↗</span>
-      </a>
-      <a class="file-row" href="public/VIDEO_SCRIPT_UMBRAMED_ES.md" target="_blank">
-        <span class="file-icon">🇪🇸</span>
-        <span class="file-name">Video Script ES</span>
-        <span class="file-tag">Pitch</span>
-        <span class="file-arrow">↗</span>
-      </a>
-      <a class="file-row" href="Umbramed Dossier Estratégico EIC 2026 Alta Probabilidad.pdf" target="_blank">
-        <span class="file-icon">📄</span>
-        <span class="file-name">Dossier Estratégico EIC 2026</span>
-        <span class="file-tag">PDF</span>
-        <span class="file-arrow">↗</span>
-      </a>
+
+      <div class="doc-row" onclick="openDoc('public/VALERIO_PLAN_ACCION_EJECUTIVO.md', 'Plan de Acción')">
+        <span class="doc-icon">🗺️</span>
+        <div class="doc-info">
+          <div class="doc-name">Plan de Acción — Qué hay que hacer y cuándo</div>
+          <div class="doc-desc">Resumen ejecutivo de todas las convocatorias de financiación, deadlines y lo que necesitamos de Valerio paso a paso.</div>
+        </div>
+        <span class="doc-arrow">→</span>
+      </div>
+
+      <div class="doc-row" onclick="openDoc('public/VALERIO_VIDEO_SCRIPT_EIC.md', 'Guión del Vídeo EIC')">
+        <span class="doc-icon">🎬</span>
+        <div class="doc-info">
+          <div class="doc-name">Guión del Vídeo para la EIC — Lo que Valerio dice en cámara</div>
+          <div class="doc-desc">El vídeo de 3 minutos vale el 50% de la puntuación EIC. Aquí está el guión exacto, frase por frase, con instrucciones de grabación.</div>
+        </div>
+        <span class="doc-arrow">→</span>
+      </div>
+
+      <div class="doc-row" onclick="openDoc('public/VIDEO_SCRIPT_UMBRAMED_ES.md', 'Guión en Español')">
+        <span class="doc-icon">🇪🇸</span>
+        <div class="doc-info">
+          <div class="doc-name">Guión del Vídeo en Español (versión completa)</div>
+          <div class="doc-desc">Versión extendida del guión en castellano, con contexto clínico y mensajes clave para los evaluadores europeos.</div>
+        </div>
+        <span class="doc-arrow">→</span>
+      </div>
+
+      <div class="doc-row" onclick="openDoc('public/VIDEO_SCRIPT_UMBRAMED_EN.md', 'Script in English')">
+        <span class="doc-icon">🌐</span>
+        <div class="doc-info">
+          <div class="doc-name">Video Script in English</div>
+          <div class="doc-desc">La versión en inglés del guión, que es el idioma oficial de la solicitud EIC.</div>
+        </div>
+        <span class="doc-arrow">→</span>
+      </div>
+
+      <div class="doc-row" onclick="openDoc('public/CLINICAL_PROTOCOL_UMBRAMED.md', 'Protocolo Clínico')">
+        <span class="doc-icon">🏥</span>
+        <div class="doc-info">
+          <div class="doc-name">Protocolo Clínico — Cómo validamos Umbramed con tus pacientes</div>
+          <div class="doc-desc">Diseño del estudio clínico con los 6.500 pacientes de Valerio en el SAS. Define qué medimos, cómo lo medimos y qué resultados demuestran que funciona.</div>
+        </div>
+        <span class="doc-arrow">→</span>
+      </div>
+
+      <div class="doc-row" onclick="openDoc('public/UMBRAMED_Clinical_Protocol_v1.2.md', 'Protocolo v1.2')">
+        <span class="doc-icon">🔬</span>
+        <div class="doc-info">
+          <div class="doc-name">Protocolo Clínico v1.2 — Versión actualizada</div>
+          <div class="doc-desc">Revisión del protocolo con criterios de inclusión refinados, endpoints primarios y plan de análisis estadístico.</div>
+        </div>
+        <span class="doc-arrow">→</span>
+      </div>
+
     </div>
   </div>
 
   <!-- Tasks -->
   <div class="section">
-    <div class="section-title">Open Tasks</div>
+    <div class="section-title">Tareas pendientes — Lo que necesitamos ahora</div>
     <div class="card">
-      <div class="check-row">
-        <div class="dot done"></div>
-        <div><div class="check-text done">Clinical protocol v1.2</div></div>
-      </div>
-      <div class="check-row">
-        <div class="dot done"></div>
-        <div><div class="check-text done">Video scripts ES + EN</div></div>
-      </div>
-      <div class="check-row">
-        <div class="dot high"></div>
-        <div>
-          <div class="check-text">Financial model — 5-yr projections</div>
-          <div class="check-meta">Critical path · Mar 2026</div>
+
+      <div class="task-row">
+        <div class="task-dot hecho"></div>
+        <div class="task-text">
+          <div class="task-title hecho">Protocolo clínico v1.2 completado</div>
         </div>
       </div>
-      <div class="check-row">
-        <div class="dot high"></div>
-        <div>
-          <div class="check-text">Clinical pilot data from Clínica Vistahermosa</div>
-          <div class="check-meta">Critical path · May 2026</div>
+
+      <div class="task-row">
+        <div class="task-dot hecho"></div>
+        <div class="task-text">
+          <div class="task-title hecho">Guiones del vídeo ES + EN redactados</div>
         </div>
       </div>
-      <div class="check-row">
-        <div class="dot"></div>
-        <div>
-          <div class="check-text">TAM/SAM/SOM market sizing</div>
-          <div class="check-meta">Apr 2026</div>
+
+      <div class="task-row">
+        <div class="task-dot urgente"></div>
+        <div class="task-text">
+          <div class="task-title">Grabar el vídeo de presentación (3 minutos)</div>
+          <div class="task-exp">Este vídeo es lo más importante de toda la solicitud — los evaluadores lo ven antes que nada. Valerio graba en bata blanca, en consulta, explicando el problema y cómo Umbramed lo resuelve. El guión exacto ya está listo.</div>
+          <div class="task-fecha">⚠️ Urgente — antes de marzo 2026</div>
         </div>
       </div>
-      <div class="check-row">
-        <div class="dot"></div>
-        <div>
-          <div class="check-text">KOL letters of support (min. 2 hospitals)</div>
-          <div class="check-meta">May 2026</div>
+
+      <div class="task-row">
+        <div class="task-dot urgente"></div>
+        <div class="task-text">
+          <div class="task-title">Arrancar el piloto clínico en Clínica Vistahermosa</div>
+          <div class="task-exp">Necesitamos datos reales de pacientes para incluir en la solicitud. Valerio activa el protocolo con un mínimo de 50 casos antes de mayo para tener resultados preliminares.</div>
+          <div class="task-fecha">⚠️ Crítico — datos necesarios antes de mayo 2026</div>
         </div>
       </div>
-      <div class="check-row">
-        <div class="dot"></div>
-        <div>
-          <div class="check-text">MDR regulatory pathway assessment</div>
-          <div class="check-meta">Jun 2026</div>
+
+      <div class="task-row">
+        <div class="task-dot"></div>
+        <div class="task-text">
+          <div class="task-title">Cartas de apoyo de hospitales (mínimo 2)</div>
+          <div class="task-exp">Dos jefes de servicio o directores médicos que avalen el proyecto por escrito. No tienen que comprometerse a nada económico — solo decir que el problema existe y que Umbramed es prometedor.</div>
+          <div class="task-fecha">Mayo 2026</div>
         </div>
       </div>
-      <div class="check-row">
-        <div class="dot"></div>
-        <div>
-          <div class="check-text">EIC Step 1 short application — first draft</div>
-          <div class="check-meta">Jul 2026</div>
+
+      <div class="task-row">
+        <div class="task-dot"></div>
+        <div class="task-text">
+          <div class="task-title">Modelo financiero a 5 años</div>
+          <div class="task-exp">Proyección de ingresos, costes y crecimiento. Cuántos médicos pueden usar Umbramed, a qué precio, en qué países. Sami lidera esto con apoyo de Valerio para validar las cifras clínicas.</div>
+          <div class="task-fecha">Marzo – Abril 2026</div>
         </div>
       </div>
-      <div class="check-row">
-        <div class="dot"></div>
-        <div>
-          <div class="check-text">Record pitch video (3 min)</div>
-          <div class="check-meta">Aug 2026</div>
+
+      <div class="task-row">
+        <div class="task-dot"></div>
+        <div class="task-text">
+          <div class="task-title">Evaluación del camino regulatorio MDR</div>
+          <div class="task-exp">Umbramed necesita el marcado CE como dispositivo médico Clase IIa para poder venderlo en Europa. Hay que contratar un consultor regulatorio que confirme el plan y los plazos.</div>
+          <div class="task-fecha">Junio 2026</div>
         </div>
       </div>
+
+      <div class="task-row">
+        <div class="task-dot"></div>
+        <div class="task-text">
+          <div class="task-title">Borrador de la solicitud EIC (Paso 1)</div>
+          <div class="task-exp">El formulario corto de 10 páginas que se envía primero. Si lo aprueban, pasamos al Paso 2 con el business plan completo. Sami redacta, Valerio revisa la parte clínica.</div>
+          <div class="task-fecha">Julio 2026</div>
+        </div>
+      </div>
+
     </div>
   </div>
 
-  <!-- Links -->
-  <div class="section">
-    <div class="section-title">Quick Links</div>
-    <div class="links-grid">
-      <a class="link-card" href="https://eic.ec.europa.eu/eic-funding-opportunities/eic-accelerator_en" target="_blank">
-        <div class="link-card-name">EIC Accelerator</div>
-        <div class="link-card-sub">Official portal ↗</div>
-      </a>
-      <a class="link-card" href="https://eic.ec.europa.eu/apply-funding/apply-eic-funding_en" target="_blank">
-        <div class="link-card-name">Apply for Funding</div>
-        <div class="link-card-sub">EIC submission ↗</div>
-      </a>
-      <a class="link-card" href="https://ec.europa.eu/info/funding-tenders/opportunities/portal/" target="_blank">
-        <div class="link-card-name">Horizon Portal</div>
-        <div class="link-card-sub">Funding search ↗</div>
-      </a>
-    </div>
+  <div style="text-align:center;color:#a1a1aa;font-size:11.5px;padding-bottom:24px;">
+    Umbramed · Proyecto EIC 2026 · Actualizado febrero 2026
   </div>
 
 </div>
+
+<!-- ── VIEWER ── -->
+<div id="viewer">
+  <div class="viewer-topbar">
+    <span class="viewer-back" onclick="closeDocs()">← Volver al panel</span>
+    <span class="viewer-title" id="viewer-title"></span>
+  </div>
+  <div class="viewer-body">
+    <div class="prose" id="viewer-content">
+      <div class="loading">Cargando documento…</div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function openDoc(path, title) {
+    document.getElementById('dashboard').style.display = 'none';
+    document.getElementById('viewer').style.display = 'block';
+    document.getElementById('viewer-title').textContent = title;
+    document.getElementById('viewer-content').innerHTML = '<div class="loading">Cargando…</div>';
+    window.scrollTo(0,0);
+
+    fetch(path)
+      .then(r => r.text())
+      .then(md => {
+        document.getElementById('viewer-content').innerHTML = marked.parse(md);
+      })
+      .catch(() => {
+        document.getElementById('viewer-content').innerHTML = '<div class="loading">No se pudo cargar el documento.</div>';
+      });
+  }
+
+  function closeDocs() {
+    document.getElementById('viewer').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'block';
+    window.scrollTo(0,0);
+  }
+</script>
 </body>
 </html>
