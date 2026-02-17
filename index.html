@@ -10,190 +10,274 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --bg:#f4f4f5; --surface:#ffffff; --border:#e4e4e7; --border2:#d4d4d8;
-      --text:#18181b; --muted:#71717a; --green:#16a34a; --red:#ef4444; --blue:#2563eb;
-      --font:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;
+      --bg: #f4f4f5;
+      --surface: #ffffff;
+      --border: #e4e4e7;
+      --border2: #d4d4d8;
+      --text: #18181b;
+      --muted: #71717a;
+      --green: #16a34a;
+      --red: #dc2626;
+      --blue: #2563eb;
+      --font: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
     }
-    body { font-family:var(--font); background:var(--bg); color:var(--text); font-size:14px; }
+    body { font-family: var(--font); background: var(--bg); color: var(--text); font-size: 14px; line-height: 1.5; }
 
-    /* topbar shared */
-    .topbar { position:sticky;top:0;z-index:100;background:var(--surface);border-bottom:1px solid var(--border);padding:10px 24px;display:flex;align-items:center;gap:12px; }
-    .back-btn { display:flex;align-items:center;gap:5px;font-size:13px;color:var(--muted);cursor:pointer;padding:4px 10px;border-radius:5px;border:1px solid var(--border);background:var(--bg); }
-    .back-btn:hover { background:var(--border);color:var(--text); }
-    .topbar-label { font-size:13px;color:var(--muted); }
+    /* ── LAYOUT ── */
+    .page { max-width: 720px; margin: 0 auto; padding: 40px 20px 60px; }
 
-    /* dashboard */
-    #dashboard { max-width:680px;margin:0 auto;padding:48px 24px; }
+    /* ── HEADER ── */
+    .header { display: flex; align-items: center; gap: 14px; margin-bottom: 10px; }
+    .logo-mark {
+      width: 40px; height: 40px; background: var(--text); color: #fff;
+      border-radius: 10px; display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 800; letter-spacing: -.5px; flex-shrink: 0;
+    }
+    .header-title { font-size: 22px; font-weight: 750; letter-spacing: -.5px; }
+    .header-sub { font-size: 13.5px; color: var(--muted); line-height: 1.65; margin-bottom: 36px; }
+    .header-sub strong { color: var(--text); font-weight: 600; }
 
-    .logo { display:flex;align-items:center;gap:10px;margin-bottom:6px; }
-    .logo-mark { width:32px;height:32px;background:var(--text);color:#fff;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700; }
-    h1 { font-size:19px;font-weight:700;letter-spacing:-.4px; }
-    .sub { font-size:13.5px;color:var(--muted);line-height:1.65;margin-top:4px;margin-bottom:32px; }
+    /* ── SECTION LABEL ── */
+    .sec { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 10px; }
 
-    .card { background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:20px; }
+    /* ── TASK CARD ── */
+    .tasks { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 28px; box-shadow: 0 1px 3px rgba(0,0,0,.05); }
+    .task-row {
+      display: flex; align-items: flex-start; gap: 14px;
+      padding: 14px 18px; border-bottom: 1px solid var(--border);
+      position: relative;
+    }
+    .task-row:last-child { border-bottom: none; }
+    .task-row.done { opacity: .55; }
+    .task-row.urgent { background: #fffbfb; }
 
-    /* tasks */
-    .task-row { display:flex;align-items:flex-start;gap:12px;padding:12px 18px;border-bottom:1px solid var(--border); }
-    .task-row:last-child { border-bottom:none; }
-    .tdot { width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:5px;border:1.5px solid #d4d4d8;background:#fff; }
-    .tdot.done { background:var(--green);border-color:var(--green); }
-    .tdot.hot  { background:var(--red);border-color:var(--red); }
-    .ttitle { font-size:13.5px;font-weight:600;margin-bottom:3px; }
-    .ttitle.done { text-decoration:line-through;color:var(--muted);font-weight:400; }
-    .texp { font-size:12.5px;color:var(--muted);line-height:1.5; }
+    .tdot {
+      width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0;
+      margin-top: 5px; border: 2px solid var(--border2); background: #fff;
+    }
+    .tdot.green  { background: var(--green); border-color: var(--green); }
+    .tdot.red    { background: var(--red);   border-color: var(--red); }
 
-    /* doc rows */
-    .doc-row { display:flex;align-items:center;gap:14px;padding:13px 18px;border-bottom:1px solid var(--border);cursor:pointer;color:var(--text); }
-    .doc-row:last-child { border-bottom:none; }
-    .doc-row:hover { background:var(--bg); }
-    .doc-row:hover .arr { opacity:1; }
-    .doc-icon { font-size:17px;flex-shrink:0; }
-    .doc-info { flex:1; }
-    .doc-name { font-size:13.5px;font-weight:500; }
-    .doc-desc { font-size:12px;color:var(--muted);margin-top:2px; }
-    .arr { color:var(--muted);font-size:13px;opacity:.35;transition:opacity .1s; }
+    .task-body { flex: 1; }
+    .task-title { font-size: 14px; font-weight: 600; margin-bottom: 3px; color: var(--text); }
+    .task-title.strike { text-decoration: line-through; color: var(--muted); font-weight: 400; }
+    .task-desc  { font-size: 12.5px; color: var(--muted); line-height: 1.55; }
 
-    /* screenshot slideshow */
-    .slides-wrap { margin-bottom:24px; }
-    .slides-header { display:flex;align-items:center;justify-content:space-between;margin-bottom:12px; }
-    .slides-header .sec-label { margin-bottom:0; }
-    .demo-link { display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;color:var(--text);background:var(--surface);border:1px solid var(--border2);padding:5px 14px;border-radius:6px;text-decoration:none; }
-    .demo-link:hover { background:var(--bg); }
-    .swiper { border-radius:10px;overflow:hidden;border:1px solid var(--border);box-shadow:0 2px 8px rgba(0,0,0,.07); }
-    .swiper-slide img { width:100%;display:block;height:auto; }
-    .slide-caption { position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,.55));padding:20px 18px 14px;color:#fff;z-index:2; }
-    .slide-caption-title { font-size:14px;font-weight:600;letter-spacing:-.2px; }
-    .slide-caption-sub   { font-size:12px;opacity:.75;margin-top:2px; }
-    .swiper-slide { position:relative; }
-    .swiper-pagination-bullet { background:var(--surface)!important;opacity:.7; }
-    .swiper-pagination-bullet-active { opacity:1!important; }
-    .swiper-button-prev,.swiper-button-next { color:var(--surface)!important;--swiper-navigation-size:20px; }
-    @media(max-width:600px){.slides-header{flex-direction:column;align-items:flex-start;gap:8px;}}
+    .task-badge {
+      align-self: center; font-size: 10px; font-weight: 700;
+      padding: 2px 8px; border-radius: 9999px; white-space: nowrap;
+      background: #fef2f2; color: var(--red); border: 1px solid #fecaca;
+    }
 
-    .sec-label { font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:8px; }
+    /* ── SLIDESHOW ── */
+    .slides-section { margin-bottom: 28px; }
+    .slides-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .demo-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 12.5px; font-weight: 600; color: var(--text);
+      background: var(--surface); border: 1.5px solid var(--border2);
+      padding: 6px 14px; border-radius: 8px; text-decoration: none;
+      transition: background .1s, box-shadow .1s;
+      box-shadow: 0 1px 2px rgba(0,0,0,.06);
+    }
+    .demo-link:hover { background: var(--bg); box-shadow: 0 2px 6px rgba(0,0,0,.1); }
+    .demo-link-icon { font-size: 10px; }
 
-    /* viewer */
-    #viewer { display:none;min-height:100vh;background:var(--bg); }
-    .viewer-body { max-width:700px;margin:0 auto;padding:48px 24px 80px; }
-    .prose h1 { font-size:24px;font-weight:700;letter-spacing:-.5px;margin-bottom:8px; }
-    .prose h2 { font-size:18px;font-weight:600;margin-top:36px;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--border); }
-    .prose h3 { font-size:15px;font-weight:600;margin-top:24px;margin-bottom:8px; }
-    .prose h4 { font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin-top:16px;margin-bottom:6px; }
-    .prose p  { font-size:14px;line-height:1.75;color:#27272a;margin-bottom:14px; }
-    .prose ul,.prose ol { padding-left:20px;margin-bottom:14px; }
-    .prose li { font-size:14px;line-height:1.75;color:#27272a;margin-bottom:4px; }
-    .prose strong { font-weight:600;color:var(--text); }
-    .prose blockquote { border-left:3px solid var(--border);padding:8px 16px;margin:16px 0;background:var(--bg);border-radius:0 6px 6px 0; }
-    .prose blockquote p { margin-bottom:0;color:var(--muted); }
-    .prose code { font-family:'SF Mono',monospace;font-size:12.5px;background:var(--bg);border:1px solid var(--border);border-radius:3px;padding:1px 5px; }
-    .prose pre  { background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:14px 16px;overflow-x:auto;margin-bottom:16px; }
-    .prose pre code { border:none;background:none;padding:0; }
-    .prose table { width:100%;border-collapse:collapse;margin-bottom:16px;font-size:13px; }
-    .prose th { background:var(--bg);border:1px solid var(--border);padding:7px 12px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--muted); }
-    .prose td { border:1px solid var(--border);padding:7px 12px;vertical-align:top; }
-    .prose hr { border:none;border-top:1px solid var(--border);margin:28px 0; }
+    .swiper-wrap {
+      border-radius: 12px; overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 16px rgba(0,0,0,.10), 0 1px 3px rgba(0,0,0,.06);
+    }
+    .swiper { display: block; }
+    .swiper-slide { position: relative; }
+    .swiper-slide img { width: 100%; display: block; height: auto; }
+    .slide-caption {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      background: linear-gradient(transparent, rgba(0,0,0,.65));
+      padding: 32px 20px 16px; color: #fff; z-index: 2;
+    }
+    .slide-caption-title { font-size: 15px; font-weight: 700; letter-spacing: -.2px; }
+    .slide-caption-sub   { font-size: 12.5px; opacity: .8; margin-top: 3px; }
+    .swiper-pagination-bullet { background: #fff !important; opacity: .6; }
+    .swiper-pagination-bullet-active { opacity: 1 !important; }
+    .swiper-button-prev, .swiper-button-next {
+      color: #fff !important; --swiper-navigation-size: 18px;
+      background: rgba(0,0,0,.3); border-radius: 50%;
+      width: 34px !important; height: 34px !important;
+      margin-top: -17px;
+    }
+    .swiper-button-prev::after, .swiper-button-next::after { font-size: 13px !important; font-weight: 800; }
 
-    .loading { text-align:center;padding:60px 0;color:var(--muted);font-size:13px; }
+    /* ── DOCS ── */
+    .docs { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,.05); }
+    .doc-row {
+      display: flex; align-items: center; gap: 16px;
+      padding: 15px 18px; border-bottom: 1px solid var(--border);
+      cursor: pointer; text-decoration: none; color: var(--text);
+      transition: background .1s;
+    }
+    .doc-row:last-child { border-bottom: none; }
+    .doc-row:hover { background: var(--bg); }
+    .doc-row:hover .arr { opacity: 1; transform: translateX(2px); }
+    .doc-icon { font-size: 20px; flex-shrink: 0; }
+    .doc-info { flex: 1; }
+    .doc-name { font-size: 13.5px; font-weight: 600; margin-bottom: 2px; }
+    .doc-desc { font-size: 12px; color: var(--muted); }
+    .arr { color: var(--muted); font-size: 14px; opacity: .3; transition: opacity .15s, transform .15s; }
+
+    /* ── FOOTER ── */
+    .footer { text-align: center; color: #a1a1aa; font-size: 11.5px; padding-top: 24px; }
+
+    /* ── VIEWER ── */
+    #viewer { display: none; min-height: 100vh; background: var(--bg); }
+    .topbar {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--surface); border-bottom: 1px solid var(--border);
+      padding: 10px 24px; display: flex; align-items: center; gap: 12px;
+    }
+    .back-btn {
+      display: flex; align-items: center; gap: 5px;
+      font-size: 13px; color: var(--muted); cursor: pointer;
+      padding: 5px 12px; border-radius: 6px;
+      border: 1px solid var(--border); background: var(--bg);
+      transition: background .1s, color .1s;
+    }
+    .back-btn:hover { background: var(--border); color: var(--text); }
+    .topbar-label { font-size: 13px; color: var(--muted); }
+
+    .viewer-body { max-width: 700px; margin: 0 auto; padding: 48px 24px 80px; }
+    .prose h1 { font-size: 24px; font-weight: 700; letter-spacing: -.5px; margin-bottom: 8px; }
+    .prose h2 { font-size: 18px; font-weight: 600; margin-top: 36px; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+    .prose h3 { font-size: 15px; font-weight: 600; margin-top: 24px; margin-bottom: 8px; }
+    .prose h4 { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); margin-top: 16px; margin-bottom: 6px; }
+    .prose p  { font-size: 14px; line-height: 1.75; color: #27272a; margin-bottom: 14px; }
+    .prose ul, .prose ol { padding-left: 20px; margin-bottom: 14px; }
+    .prose li { font-size: 14px; line-height: 1.75; color: #27272a; margin-bottom: 4px; }
+    .prose strong { font-weight: 600; color: var(--text); }
+    .prose blockquote { border-left: 3px solid var(--border); padding: 8px 16px; margin: 16px 0; background: var(--bg); border-radius: 0 6px 6px 0; }
+    .prose blockquote p { margin-bottom: 0; color: var(--muted); }
+    .prose code { font-family: 'SF Mono', monospace; font-size: 12.5px; background: var(--bg); border: 1px solid var(--border); border-radius: 3px; padding: 1px 5px; }
+    .prose pre  { background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 14px 16px; overflow-x: auto; margin-bottom: 16px; }
+    .prose pre code { border: none; background: none; padding: 0; }
+    .prose table { width: 100%; border-collapse: collapse; margin-bottom: 16px; font-size: 13px; }
+    .prose th { background: var(--bg); border: 1px solid var(--border); padding: 7px 12px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
+    .prose td { border: 1px solid var(--border); padding: 7px 12px; vertical-align: top; }
+    .prose hr { border: none; border-top: 1px solid var(--border); margin: 28px 0; }
+    .loading { text-align: center; padding: 60px 0; color: var(--muted); font-size: 13px; }
+
+    @media (max-width: 600px) {
+      .slides-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+      .page { padding: 28px 16px 48px; }
+    }
   </style>
 </head>
 <body>
 
-<!-- ═══ DASHBOARD ═══ -->
 <div id="dashboard">
-  <div style="max-width:680px;margin:0 auto;padding:48px 24px">
+  <div class="page">
 
-    <div class="logo" style="margin-bottom:6px">
+    <!-- Header -->
+    <div class="header">
       <div class="logo-mark">UM</div>
-      <h1>Umbramed — EIC Step 1</h1>
+      <h1 class="header-title">Umbramed — EIC Step 1</h1>
     </div>
-    <p class="sub">Solo hay que hacer 4 cosas para enviar el Step 1. No cartas, no partners, no datos clínicos todavía. Resultado en <strong>4–6 semanas</strong> tras enviar.</p>
+    <p class="header-sub">Solo hay que hacer 4 cosas para enviar el Step 1. No cartas, no partners, no datos clínicos todavía. Resultado en <strong>4–6 semanas</strong> tras enviar.</p>
 
-    <!-- 4 tasks -->
-    <div class="sec-label">Qué hay que hacer — en orden</div>
-    <div class="card" style="margin-bottom:20px">
-      <div class="task-row">
-        <div class="tdot done"></div>
-        <div>
-          <div class="ttitle done">Guión del vídeo listo</div>
-          <div class="texp">Ya está escrito. Solo falta grabarlo.</div>
+    <!-- Tasks -->
+    <div class="sec">Qué hay que hacer — en orden</div>
+    <div class="tasks">
+      <div class="task-row done">
+        <div class="tdot green"></div>
+        <div class="task-body">
+          <div class="task-title strike">Guión del vídeo listo</div>
+          <div class="task-desc">Ya está escrito. Solo falta grabarlo.</div>
         </div>
       </div>
-      <div class="task-row">
-        <div class="tdot hot"></div>
-        <div>
-          <div class="ttitle">① Grabar el vídeo de 3 minutos — Valerio</div>
-          <div class="texp">Bata blanca, consulta, guión abajo. Los evaluadores lo ven primero y vale el 50% de la nota. Es la tarea más urgente de todo.</div>
+      <div class="task-row urgent">
+        <div class="tdot red"></div>
+        <div class="task-body">
+          <div class="task-title">① Grabar el vídeo de 3 minutos — Valerio</div>
+          <div class="task-desc">Bata blanca, consulta, guión abajo. Los evaluadores lo ven primero y vale el 50% de la nota. Es la tarea más urgente de todo.</div>
         </div>
+        <span class="task-badge">Urgente</span>
+      </div>
+      <div class="task-row urgent">
+        <div class="tdot red"></div>
+        <div class="task-body">
+          <div class="task-title">② Pitch deck de 10 diapositivas — Sami</div>
+          <div class="task-desc">Problema → solución → mercado → por qué Umbramed → por qué Valerio → qué pedimos. Valerio revisa la parte clínica.</div>
+        </div>
+        <span class="task-badge">Urgente</span>
       </div>
       <div class="task-row">
-        <div class="tdot hot"></div>
-        <div>
-          <div class="ttitle">② Pitch deck de 10 diapositivas — Sami</div>
-          <div class="texp">Problema → solución → mercado → por qué Umbramed → por qué Valerio → qué pedimos. Valerio revisa la parte clínica.</div>
+        <div class="tdot"></div>
+        <div class="task-body">
+          <div class="task-title">③ Propuesta corta de 12 páginas — Sami</div>
+          <div class="task-desc">Formulario principal del Step 1. Ya existe el dossier de base. Valerio solo revisa las secciones clínicas.</div>
         </div>
       </div>
       <div class="task-row">
         <div class="tdot"></div>
-        <div>
-          <div class="ttitle">③ Propuesta corta de 12 páginas — Sami</div>
-          <div class="texp">Formulario principal del Step 1. Ya existe el dossier de base. Valerio solo revisa las secciones clínicas.</div>
-        </div>
-      </div>
-      <div class="task-row">
-        <div class="tdot"></div>
-        <div>
-          <div class="ttitle">④ Estimación de costes — Sami</div>
-          <div class="texp">Solo orientativa. Equipo, validación clínica, regulatorio. No hace falta contabilidad detallada.</div>
+        <div class="task-body">
+          <div class="task-title">④ Estimación de costes — Sami</div>
+          <div class="task-desc">Solo orientativa. Equipo, validación clínica, regulatorio. No hace falta contabilidad detallada.</div>
         </div>
       </div>
     </div>
 
-    <!-- Slideshow demo -->
-    <div class="slides-wrap">
+    <!-- Slideshow -->
+    <div class="slides-section">
       <div class="slides-header">
-        <div class="sec-label">Cómo funciona Umbramed</div>
-        <a class="demo-link" href="demo.html" target="_blank">▶ Abrir demo interactivo</a>
+        <div class="sec" style="margin-bottom:0">Cómo funciona Umbramed</div>
+        <a class="demo-link" href="demo.html" target="_blank">
+          <span class="demo-link-icon">▶</span> Abrir demo interactivo
+        </a>
       </div>
-      <div class="swiper mySwiper">
-        <div class="swiper-wrapper">
-          <div class="swiper-slide">
-            <img src="screenshots/inicio.jpg" alt="Inicio — Dashboard" loading="lazy" />
-            <div class="slide-caption">
-              <div class="slide-caption-title">Inicio — Dashboard</div>
-              <div class="slide-caption-sub">Resumen del día: recetas, tiempo ahorrado, alertas clínicas</div>
+      <div class="swiper-wrap">
+        <div class="swiper mySwiper">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">
+              <img src="screenshots/inicio.jpg" alt="Inicio — Dashboard" loading="lazy" />
+              <div class="slide-caption">
+                <div class="slide-caption-title">Inicio — Dashboard</div>
+                <div class="slide-caption-sub">Resumen del día: recetas pendientes, tiempo ahorrado, alertas</div>
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <img src="screenshots/pacientes.jpg" alt="Pacientes" loading="lazy" />
+              <div class="slide-caption">
+                <div class="slide-caption-title">Lista de Pacientes</div>
+                <div class="slide-caption-sub">Busca, filtra y abre el historial clínico con un clic</div>
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <img src="screenshots/recetas.jpg" alt="Recetas" loading="lazy" />
+              <div class="slide-caption">
+                <div class="slide-caption-title">Recetas Pendientes</div>
+                <div class="slide-caption-sub">IA verifica interacciones — renueva en un clic</div>
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <img src="screenshots/firma.jpg" alt="Firma Masiva" loading="lazy" />
+              <div class="slide-caption">
+                <div class="slide-caption-title">Firma Masiva</div>
+                <div class="slide-caption-sub">Firma todos los documentos del día de una sola vez</div>
+              </div>
             </div>
           </div>
-          <div class="swiper-slide">
-            <img src="screenshots/pacientes.jpg" alt="Pacientes" loading="lazy" />
-            <div class="slide-caption">
-              <div class="slide-caption-title">Lista de Pacientes</div>
-              <div class="slide-caption-sub">Busca, filtra y abre el historial clínico con un clic</div>
-            </div>
-          </div>
-          <div class="swiper-slide">
-            <img src="screenshots/recetas.jpg" alt="Recetas" loading="lazy" />
-            <div class="slide-caption">
-              <div class="slide-caption-title">Recetas Pendientes</div>
-              <div class="slide-caption-sub">IA verifica interacciones — renueva en un clic</div>
-            </div>
-          </div>
-          <div class="swiper-slide">
-            <img src="screenshots/firma.jpg" alt="Firma Masiva" loading="lazy" />
-            <div class="slide-caption">
-              <div class="slide-caption-title">Firma Masiva</div>
-              <div class="slide-caption-sub">Firma todos los documentos del día de una sola vez</div>
-            </div>
-          </div>
+          <div class="swiper-pagination"></div>
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
         </div>
-        <div class="swiper-pagination"></div>
-        <div class="swiper-button-prev"></div>
-        <div class="swiper-button-next"></div>
       </div>
     </div>
 
-    <!-- Docs — only what's needed -->
-    <div class="sec-label">Documentos que necesitas</div>
-    <div class="card">
+    <!-- Docs -->
+    <div class="sec">Documentos que necesitas</div>
+    <div class="docs">
       <div class="doc-row" onclick="openDoc('public/VALERIO_VIDEO_SCRIPT_EIC.md','Guión del Vídeo')">
         <span class="doc-icon">🎬</span>
         <div class="doc-info">
@@ -212,11 +296,11 @@
       </div>
     </div>
 
-    <div style="text-align:center;color:#a1a1aa;font-size:11.5px;padding:20px 0 0">Umbramed · EIC Step 1 · Feb 2026</div>
+    <div class="footer">Umbramed · EIC Step 1 · Feb 2026</div>
   </div>
 </div>
 
-<!-- ═══ VIEWER ═══ -->
+<!-- VIEWER -->
 <div id="viewer">
   <div class="topbar">
     <span class="back-btn" onclick="closeAll()">← Volver</span>
@@ -246,11 +330,11 @@ function closeAll() {
 
 new Swiper('.mySwiper', {
   loop: true,
-  autoplay: { delay: 3500, disableOnInteraction: false },
+  autoplay: { delay: 3800, disableOnInteraction: false, pauseOnMouseEnter: true },
   pagination: { el: '.swiper-pagination', clickable: true },
   navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
-  effect: 'slide',
-  speed: 500,
+  speed: 550,
+  keyboard: { enabled: true },
 });
 </script>
 </body>
