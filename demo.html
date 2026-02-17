@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Umbramed Demo</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:#f4f4f5; --surface:#ffffff; --border:#e4e4e7; --border2:#d4d4d8;
+      --text:#18181b; --muted:#71717a; --green:#16a34a; --red:#ef4444; --blue:#2563eb;
+      --font:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;
+    }
+    body { font-family:var(--font); background:var(--bg); color:var(--text); font-size:14px; }
+
+    .topbar { position:sticky;top:0;z-index:100;background:var(--surface);border-bottom:1px solid var(--border);padding:10px 24px;display:flex;align-items:center;gap:12px; }
+    .back-btn { display:flex;align-items:center;gap:5px;font-size:13px;color:var(--muted);cursor:pointer;padding:4px 10px;border-radius:5px;border:1px solid var(--border);background:var(--bg); }
+    .back-btn:hover { background:var(--border);color:var(--text); }
+    .topbar-label { font-size:13px;color:var(--muted); }
+
+    .app-shell { display:flex; height:calc(100vh - 45px); }
+    .app-sidebar { width:196px;flex-shrink:0;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow-y:auto; }
+    .app-brand { padding:13px 14px 11px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px; }
+    .app-brand-mark { width:26px;height:26px;background:var(--text);color:#fff;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700; }
+    .app-brand-name { font-size:13px;font-weight:700; }
+    .app-brand-ver  { font-size:10px;color:var(--muted); }
+    .app-nav { padding:7px 5px; }
+    .app-nav-label { font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);padding:5px 9px 4px; }
+    .app-nav-item { display:flex;align-items:center;gap:8px;padding:7px 9px;border-radius:5px;cursor:pointer;color:var(--muted);font-size:13px;transition:background .1s,color .1s; }
+    .app-nav-item:hover { background:var(--bg);color:var(--text); }
+    .app-nav-item.active { background:var(--bg);color:var(--text);font-weight:500; }
+    .app-nav-item svg { width:14px;height:14px;flex-shrink:0; }
+    .app-nav-badge { margin-left:auto;background:var(--red);color:#fff;font-size:10px;font-weight:700;padding:1px 5px;border-radius:9999px; }
+
+    .app-main { flex:1;display:flex;flex-direction:column;min-width:0;overflow:hidden; }
+    .app-topbar { background:var(--surface);border-bottom:1px solid var(--border);padding:9px 18px;display:flex;align-items:center;gap:10px;flex-shrink:0; }
+    .app-topbar-title { font-weight:600;font-size:14px; }
+    .app-topbar-right { margin-left:auto;display:flex;gap:8px;align-items:center; }
+    .ai-badge { background:#f0fdf4;border:1px solid #bbf7d0;color:var(--green);font-size:11px;font-weight:600;padding:2px 8px;border-radius:9999px; }
+    .app-panel { display:none;flex:1;overflow-y:auto; }
+    .app-panel.active { display:block; }
+
+    /* patient list */
+    .patient-search { padding:11px 16px;border-bottom:1px solid var(--border);background:var(--surface);display:flex;gap:7px; }
+    .search-box { flex:1;border:1px solid var(--border);border-radius:6px;padding:6px 11px;font-size:13px;outline:none;background:var(--bg);font-family:var(--font);color:var(--text); }
+    .search-box:focus { border-color:var(--border2);background:#fff; }
+    .patient-list-header { display:grid;grid-template-columns:1fr 100px 90px 90px;padding:6px 16px;background:var(--bg);border-bottom:1px solid var(--border);font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.04em; }
+    .patient-row { display:grid;grid-template-columns:1fr 100px 90px 90px;padding:10px 16px;border-bottom:1px solid var(--border);cursor:pointer;align-items:center; }
+    .patient-row:hover { background:var(--bg); }
+    .p-name { font-size:13px;font-weight:500; }
+    .p-meta { font-size:12px;color:var(--muted); }
+    .ptag { display:inline-flex;align-items:center;font-size:11px;font-weight:500;padding:2px 7px;border-radius:9999px; }
+    .ptag.pend  { background:#fef3c7;color:#b45309;border:1px solid #fde68a; }
+    .ptag.ok    { background:#f0fdf4;color:#15803d;border:1px solid #bbf7d0; }
+    .ptag.alert { background:#fef2f2;color:#b91c1c;border:1px solid #fecaca; }
+
+    /* recetas */
+    .recetas-list { padding:10px; }
+    .receta-card { background:var(--surface);border:1px solid var(--border);border-radius:7px;margin-bottom:7px;overflow:hidden; }
+    .receta-header { padding:9px 13px;display:flex;align-items:center;gap:8px; }
+    .receta-drug { font-size:13px;font-weight:600;flex:1; }
+    .receta-body { padding:0 13px 10px;display:grid;grid-template-columns:repeat(3,1fr);gap:6px; }
+    .receta-field label { font-size:10px;color:var(--muted);text-transform:uppercase;font-weight:600;letter-spacing:.04em;display:block;margin-bottom:2px; }
+    .receta-field span  { font-size:12.5px;font-weight:500; }
+    .renew-bar { background:var(--bg);border-top:1px solid var(--border);padding:8px 13px;display:flex;align-items:center;gap:8px; }
+    .renew-info { font-size:11.5px;color:var(--muted);flex:1; }
+    .btn-renew { background:var(--text);color:#fff;border:none;border-radius:5px;padding:5px 12px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font); }
+    .btn-renew:hover { background:#27272a; }
+    .btn-renew.done { background:var(--green);cursor:default; }
+
+    /* firma */
+    .firma-banner { background:#fefce8;border-bottom:1px solid #fef08a;padding:9px 16px;display:flex;align-items:center;gap:8px;font-size:12.5px; }
+    .firma-banner strong { color:#854d0e; }
+    .firma-row { display:flex;align-items:center;gap:11px;padding:10px 16px;border-bottom:1px solid var(--border); }
+    .firma-check { width:15px;height:15px;border:1.5px solid var(--border2);border-radius:3px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:9px;flex-shrink:0;background:#fff; }
+    .firma-check.checked { background:var(--text);border-color:var(--text);color:#fff; }
+    .firma-name { font-size:13px;font-weight:500;flex:1; }
+    .firma-meta { font-size:11.5px;color:var(--muted);margin-top:1px; }
+    .firma-bottom { padding:10px 16px;background:var(--surface);border-top:1px solid var(--border);display:flex;gap:7px;align-items:center; }
+    .firma-bottom .count { font-size:12px;color:var(--muted);flex:1; }
+    .btn-firmar { background:var(--text);color:#fff;border:none;border-radius:5px;padding:7px 16px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font); }
+    .btn-firmar:hover { background:#27272a; }
+
+    /* dashboard */
+    .dash-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:7px;padding:10px 10px 0; }
+    .dash-stat { background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:11px 13px; }
+    .ds-n { font-size:20px;font-weight:700;letter-spacing:-.5px; }
+    .ds-l { font-size:11px;color:var(--muted);font-weight:500;margin-bottom:3px; }
+    .ds-s { font-size:11px;color:var(--muted);margin-top:2px; }
+    .today-list { padding:10px; }
+    .today-title { font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-bottom:7px; }
+    .today-card { background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:10px 13px;margin-bottom:6px;display:flex;align-items:center;gap:9px;cursor:pointer; }
+    .today-card:hover { background:var(--bg); }
+    .tc-icon { font-size:17px; }
+    .tc-info { flex:1; }
+    .tc-title { font-size:13px;font-weight:500; }
+    .tc-sub   { font-size:12px;color:var(--muted);margin-top:1px; }
+    .tc-action { font-size:12px;color:var(--blue);font-weight:500; }
+  </style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="/" class="back-btn">← Volver</a>
+  <span class="topbar-label">Demo — Umbramed v1.0</span>
+  <div style="margin-left:auto"><span class="ai-badge">IA activa</span></div>
+</div>
+
+<div class="app-shell">
+  <nav class="app-sidebar">
+    <div class="app-brand">
+      <div class="app-brand-mark">UM</div>
+      <div>
+        <div class="app-brand-name">Umbramed</div>
+        <div class="app-brand-ver">v1.0 — Demo</div>
+      </div>
+    </div>
+    <div class="app-nav">
+      <div class="app-nav-label">Principal</div>
+      <a href="#/inicio" class="app-nav-item active" id="nav-inicio">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg>
+        Inicio
+      </a>
+      <a href="#/pacientes" class="app-nav-item" id="nav-pacientes">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6" cy="5" r="2.5"/><path d="M1 13c0-2.76 2.24-5 5-5h1M12 10v4M14 12h-4"/></svg>
+        Pacientes
+      </a>
+      <a href="#/recetas" class="app-nav-item" id="nav-recetas">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 1h7l3 3v11H3V1z"/><path d="M10 1v3h3M5 7h6M5 10h4"/></svg>
+        Recetas
+        <span class="app-nav-badge">14</span>
+      </a>
+      <a href="#/firma" class="app-nav-item" id="nav-firma">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 12l2-2 8-8 2 2-8 8-2 0 0-2zM12 4l-2-2"/></svg>
+        Firma masiva
+        <span class="app-nav-badge">8</span>
+      </a>
+    </div>
+  </nav>
+
+  <div class="app-main">
+    <div class="app-topbar">
+      <span class="app-topbar-title" id="panel-title">Inicio</span>
+      <div class="app-topbar-right">
+        <span style="font-size:12px;color:var(--muted)">Dr. Valerio Trigos</span>
+        <div style="width:26px;height:26px;border-radius:50%;background:var(--text);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;">VT</div>
+      </div>
+    </div>
+
+    <!-- Panel Inicio -->
+    <div class="app-panel active" id="panel-inicio">
+      <div class="dash-grid">
+        <div class="dash-stat"><div class="ds-l">Recetas pendientes</div><div class="ds-n">14</div><div class="ds-s">8 pre-aprobadas por IA</div></div>
+        <div class="dash-stat"><div class="ds-l">Tiempo ahorrado hoy</div><div class="ds-n">1h 42m</div><div class="ds-s">vs. proceso manual</div></div>
+        <div class="dash-stat"><div class="ds-l">Pacientes atendidos</div><div class="ds-n">23 / 28</div><div class="ds-s">citados hoy</div></div>
+      </div>
+      <div class="today-list">
+        <div class="today-title">Umbramed ha preparado estas acciones</div>
+        <div class="today-card" onclick="navigate('#/recetas')">
+          <span class="tc-icon">💊</span>
+          <div class="tc-info"><div class="tc-title">8 recetas listas para revisar y firmar</div><div class="tc-sub">IA ha verificado interacciones y dosis</div></div>
+          <span class="tc-action">Revisar →</span>
+        </div>
+        <div class="today-card" onclick="navigate('#/firma')">
+          <span class="tc-icon">✍️</span>
+          <div class="tc-info"><div class="tc-title">Firma masiva — 8 documentos listos</div><div class="tc-sub">Firma todo de un solo clic</div></div>
+          <span class="tc-action">Firmar →</span>
+        </div>
+        <div class="today-card" onclick="navigate('#/pacientes')">
+          <span class="tc-icon">🔔</span>
+          <div class="tc-info"><div class="tc-title">3 pacientes con alertas clínicas</div><div class="tc-sub">Valores fuera de rango en analíticas</div></div>
+          <span class="tc-action">Ver →</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel Pacientes -->
+    <div class="app-panel" id="panel-pacientes">
+      <div class="patient-search">
+        <input class="search-box" placeholder="Buscar paciente…" />
+      </div>
+      <div class="patient-list-header"><div>Paciente</div><div>Última visita</div><div>Estado</div><div>Receta</div></div>
+      <div id="patient-list-body"></div>
+    </div>
+
+    <!-- Panel Recetas -->
+    <div class="app-panel" id="panel-recetas">
+      <div class="recetas-list" id="recetas-list-body"></div>
+    </div>
+
+    <!-- Panel Firma -->
+    <div class="app-panel" id="panel-firma">
+      <div class="firma-banner">⚡ <strong>8 documentos listos.</strong> Ninguno tiene alertas de seguridad.</div>
+      <div id="firma-list-body"></div>
+      <div class="firma-bottom">
+        <span class="count" id="firma-count">0 seleccionados</span>
+        <button class="btn-secondary" onclick="selectAllFirma()">Seleccionar todo</button>
+        <button class="btn-firmar" onclick="firmarTodo()">Firmar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const patients = [
+  {id:1,name:'García López, María',age:67,nhc:'SAS-441823',diag:'HTA + DM2',ultima:'Hoy',estado:'alert',receta:'Pendiente'},
+  {id:2,name:'Rodríguez Pérez, Antonio',age:54,nhc:'SAS-309712',diag:'EPOC moderado',ultima:'Ayer',estado:'pend',receta:'Pendiente'},
+  {id:3,name:'Martínez Sánchez, Elena',age:72,nhc:'SAS-518934',diag:'FA + anticoagulación',ultima:'Lun',estado:'alert',receta:'Pendiente'},
+  {id:4,name:'Fernández Gil, José',age:45,nhc:'SAS-221045',diag:'Hiperlipidemia',ultima:'12 ene',estado:'ok',receta:'Al día'},
+  {id:5,name:'Gómez Ruiz, Francisco',age:78,nhc:'SAS-503467',diag:'Insuficiencia cardiaca FC II',ultima:'Hoy',estado:'alert',receta:'Pendiente'},
+];
+
+const recetas = [
+  {drug:'Metformina 850 mg',dosif:'1 comp./12h',dur:'90 días',pac:'García López, María',ai:'sin interacciones'},
+  {drug:'Enalapril 10 mg',dosif:'1 comp./24h',dur:'90 días',pac:'García López, María',ai:'sin interacciones'},
+  {drug:'Furosemida 40 mg',dosif:'1 comp./24h',dur:'30 días',pac:'Gómez Ruiz, Francisco',ai:'revisar K+'},
+  {drug:'Apixabán 5 mg',dosif:'1 comp./12h',dur:'90 días',pac:'Martínez Sánchez, Elena',ai:'⚠️ interacción AINE'},
+  {drug:'Salbutamol 100 mcg',dosif:'2 puls. en crisis',dur:'90 días',pac:'Rodríguez Pérez, Antonio',ai:'sin interacciones'},
+];
+
+const firmas = [
+  {desc:'Metformina 850mg × 90 días',pac:'García López, María',ok:true,checked:false},
+  {desc:'Enalapril 10mg × 90 días',pac:'García López, María',ok:true,checked:false},
+  {desc:'Apixabán 5mg × 90 días',pac:'Martínez Sánchez, Elena',ok:false,checked:false},
+  {desc:'Carvedilol 6.25mg × 30 días',pac:'Gómez Ruiz, Francisco',ok:true,checked:false},
+  {desc:'Informe derivación a Cardiología',pac:'Gómez Ruiz, Francisco',ok:true,checked:false},
+  {desc:'Salbutamol 100mcg × 90 días',pac:'Rodríguez Pérez, Antonio',ok:true,checked:false},
+  {desc:'Nota clínica revisión DM2',pac:'García López, María',ok:true,checked:false},
+  {desc:'Levotiroxina 75mcg × 90 días',pac:'López Torres, Carmen',ok:true,checked:false},
+];
+
+const titleMap = {inicio:'Inicio',pacientes:'Pacientes',recetas:'Recetas pendientes',firma:'Firma masiva'};
+
+function navigate(hash) { window.location.hash = hash; }
+
+function stag(s){const m={alert:['alert','⚠ Alerta'],ok:['ok','✓ Estable'],pend:['pend','Pendiente']};const[c,l]=m[s]||['',''];return`<span class="ptag ${c}">${l}</span>`;}
+
+function renderPatients(){
+  document.getElementById('patient-list-body').innerHTML=patients.map(p=>`
+    <div class="patient-row">
+      <div><div class="p-name">${p.name}</div><div class="p-meta">${p.age} años · ${p.nhc}</div></div>
+      <div class="p-meta">${p.ultima}</div>
+      <div>${stag(p.estado)}</div>
+      <div>${p.receta==='Al día'?'<span class="ptag ok">✓ Al día</span>':'<span class="ptag pend">Pendiente</span>'}</div>
+    </div>`).join('');
+}
+
+function renderRecetas(){
+  document.getElementById('recetas-list-body').innerHTML=recetas.map((r,i)=>`
+    <div class="receta-card">
+      <div class="receta-header">
+        <span class="receta-drug">${r.drug}</span>
+        <span class="ptag ${r.ai.includes('⚠️')?'alert':'ok'}" style="font-size:11px">IA: ${r.ai}</span>
+      </div>
+      <div class="receta-body">
+        <div class="receta-field"><label>Posología</label><span>${r.dosif}</span></div>
+        <div class="receta-field"><label>Duración</label><span>${r.dur}</span></div>
+        <div class="receta-field"><label>Paciente</label><span style="font-size:12px">${r.pac}</span></div>
+      </div>
+      <div class="renew-bar">
+        <span class="renew-info">✦ Umbramed ha verificado interacciones automáticamente</span>
+        <button class="btn-renew" onclick="this.textContent='✓ Renovada';this.classList.add('done');this.disabled=true">Renovar</button>
+      </div>
+    </div>`).join('');
+}
+
+function renderFirmas(){
+  document.getElementById('firma-list-body').innerHTML=firmas.map((f,i)=>`
+    <div class="firma-row">
+      <div class="firma-check" id="fc-${i}" onclick="toggleFirma(${i})"></div>
+      <div style="flex:1">
+        <div class="firma-name">${f.desc}</div>
+        <div class="firma-meta">${f.pac} · ${f.ok?'<span style="color:var(--green)">✓ verificado por IA</span>':'<span style="color:var(--red)">⚠ revisar</span>'}</div>
+      </div>
+    </div>`).join('');
+}
+
+function toggleFirma(i){
+  firmas[i].checked=!firmas[i].checked;
+  const el=document.getElementById('fc-'+i);
+  el.classList.toggle('checked',firmas[i].checked);
+  el.textContent=firmas[i].checked?'✓':'';
+  document.getElementById('firma-count').textContent=firmas.filter(f=>f.checked).length+' seleccionados';
+}
+
+function selectAllFirma(){firmas.forEach((f,i)=>{if(!f.checked)toggleFirma(i);});}
+function firmarTodo(){
+  const n=firmas.filter(f=>f.checked).length;
+  if(!n)return;
+  document.getElementById('firma-list-body').innerHTML=`<div style="padding:40px;text-align:center;color:var(--green);font-size:15px;font-weight:600">✓ ${n} documento${n>1?'s':''} firmado${n>1?'s':''}</div>`;
+}
+
+function showPanel(name){
+  document.querySelectorAll('.app-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.app-nav-item').forEach(n=>n.classList.remove('active'));
+  const panel=document.getElementById('panel-'+name);
+  if(panel)panel.classList.add('active');
+  const nav=document.getElementById('nav-'+name);
+  if(nav)nav.classList.add('active');
+  document.getElementById('panel-title').textContent=titleMap[name]||name;
+}
+
+function handleHash(){
+  const hash=window.location.hash.slice(2)||'inicio';
+  showPanel(hash);
+  if(hash==='pacientes') renderPatients();
+  else if(hash==='recetas') renderRecetas();
+  else if(hash==='firma') renderFirmas();
+}
+
+window.addEventListener('hashchange',handleHash);
+handleHash();
+renderPatients();
+renderRecetas();
+renderFirmas();
+</script>
+</body>
+</html>
