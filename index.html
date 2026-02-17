@@ -12,275 +12,316 @@
       --text:#18181b; --muted:#71717a; --green:#16a34a; --red:#ef4444; --blue:#2563eb;
       --font:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;
     }
-    body { font-family:var(--font); background:var(--bg); color:var(--text); font-size:14px; }
+    body { font-family:var(--font); background:var(--bg); color:var(--text); font-size:15px; line-height:1.6; }
 
-    /* topbar shared */
-    .topbar { position:sticky;top:0;z-index:100;background:var(--surface);border-bottom:1px solid var(--border);padding:10px 24px;display:flex;align-items:center;gap:12px; }
-    .back-btn { display:flex;align-items:center;gap:5px;font-size:13px;color:var(--muted);cursor:pointer;padding:4px 10px;border-radius:5px;border:1px solid var(--border);background:var(--bg); }
+    .topbar { position:sticky;top:0;z-index:100;background:var(--surface);border-bottom:1px solid var(--border);padding:12px 28px;display:flex;align-items:center;gap:14px; }
+    .back-btn { display:flex;align-items:center;gap:5px;font-size:14px;color:var(--muted);cursor:pointer;padding:5px 12px;border-radius:6px;border:1px solid var(--border);background:var(--bg); }
     .back-btn:hover { background:var(--border);color:var(--text); }
-    .topbar-label { font-size:13px;color:var(--muted); }
+    .topbar-label { font-size:14px;color:var(--muted); }
 
-    /* dashboard */
-    #dashboard { max-width:680px;margin:0 auto;padding:48px 24px; }
+    #dashboard { max-width:900px;margin:0 auto;padding:56px 32px; }
 
-    .logo { display:flex;align-items:center;gap:10px;margin-bottom:6px; }
-    .logo-mark { width:32px;height:32px;background:var(--text);color:#fff;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700; }
-    h1 { font-size:19px;font-weight:700;letter-spacing:-.4px; }
-    .sub { font-size:13.5px;color:var(--muted);line-height:1.65;margin-top:4px;margin-bottom:32px; }
+    .logo { display:flex;align-items:center;gap:12px;margin-bottom:8px; }
+    .logo-mark { width:38px;height:38px;background:var(--text);color:#fff;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700; }
+    h1 { font-size:26px;font-weight:700;letter-spacing:-.5px; }
+    .sub { font-size:15px;color:var(--muted);line-height:1.7;margin-top:6px;margin-bottom:40px; }
 
-    .card { background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:20px; }
+    .card { background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:24px; }
 
     /* tasks */
-    .task-row { display:flex;align-items:flex-start;gap:12px;padding:12px 18px;border-bottom:1px solid var(--border); }
+    .task-row { display:flex;align-items:flex-start;gap:14px;padding:16px 20px;border-bottom:1px solid var(--border); }
     .task-row:last-child { border-bottom:none; }
-    .tdot { width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:5px;border:1.5px solid #d4d4d8;background:#fff; }
+    .tdot { width:9px;height:9px;border-radius:50%;flex-shrink:0;margin-top:6px;border:1.5px solid #d4d4d8;background:#fff; }
     .tdot.done { background:var(--green);border-color:var(--green); }
     .tdot.hot  { background:var(--red);border-color:var(--red); }
-    .ttitle { font-size:13.5px;font-weight:600;margin-bottom:3px; }
+    .ttitle { font-size:15px;font-weight:600;margin-bottom:4px; }
     .ttitle.done { text-decoration:line-through;color:var(--muted);font-weight:400; }
-    .texp { font-size:12.5px;color:var(--muted);line-height:1.5; }
+    .texp { font-size:14px;color:var(--muted);line-height:1.6; }
 
     /* doc rows */
-    .doc-row { display:flex;align-items:center;gap:14px;padding:13px 18px;border-bottom:1px solid var(--border);cursor:pointer;color:var(--text); }
+    .doc-row { display:flex;align-items:center;gap:16px;padding:16px 20px;border-bottom:1px solid var(--border);cursor:pointer;color:var(--text); }
     .doc-row:last-child { border-bottom:none; }
     .doc-row:hover { background:var(--bg); }
     .doc-row:hover .arr { opacity:1; }
-    .doc-icon { font-size:17px;flex-shrink:0; }
+    .doc-icon { font-size:20px;flex-shrink:0; }
     .doc-info { flex:1; }
-    .doc-name { font-size:13.5px;font-weight:500; }
-    .doc-desc { font-size:12px;color:var(--muted);margin-top:2px; }
-    .arr { color:var(--muted);font-size:13px;opacity:.35;transition:opacity .1s; }
+    .doc-name { font-size:15px;font-weight:500; }
+    .doc-desc { font-size:13px;color:var(--muted);margin-top:2px; }
+    .arr { color:var(--muted);font-size:15px;opacity:.3;transition:opacity .1s; }
 
-    /* demo hero */
-    .demo-hero { background:var(--text);color:#fff;border-radius:8px;padding:22px 22px 18px;margin-bottom:20px;cursor:pointer; }
-    .demo-hero:hover { background:#27272a; }
-    .demo-label { font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;opacity:.45;margin-bottom:8px; }
-    .demo-title { font-size:17px;font-weight:700;letter-spacing:-.3px;margin-bottom:5px; }
-    .demo-sub   { font-size:12.5px;opacity:.6;line-height:1.5; }
-    .demo-btn   { display:inline-flex;align-items:center;gap:5px;margin-top:14px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);padding:6px 13px;border-radius:6px;font-size:12.5px;font-weight:500; }
+    /* screenshots section */
+    .sec-title { font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px;margin-top:32px; }
+    .screens-grid { display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:28px; }
+    .screen { background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.06); }
+    .screen-title { padding:12px 16px;background:var(--bg);border-bottom:1px solid var(--border);font-size:13px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em; }
+    .screen-body { padding:16px;font-size:13px;line-height:1.7;color:var(--text); }
+    .screen-content { display:flex;flex-direction:column;gap:8px; }
+    .row { display:flex;align-items:center;gap:10px; }
+    .row.header { background:var(--bg);padding:8px 10px;border-radius:6px;font-weight:600;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em; }
+    .row.item { padding:10px;border-bottom:1px solid var(--border); }
+    .row.item:last-child { border-bottom:none; }
+    .item-icon { font-size:18px;width:24px;text-align:center;flex-shrink:0; }
+    .item-info { flex:1;min-width:0; }
+    .item-title { font-size:13.5px;font-weight:500;margin-bottom:1px; }
+    .item-meta { font-size:12px;color:var(--muted); }
+    .badge { display:inline-block;font-size:11px;font-weight:600;padding:2px 7px;border-radius:9999px;margin-left:auto;flex-shrink:0; }
+    .badge.green { background:#f0fdf4;color:#15803d;border:1px solid #bbf7d0; }
+    .badge.amber { background:#fef3c7;color:#b45309;border:1px solid #fde68a; }
+    .badge.red   { background:#fef2f2;color:#b91c1c;border:1px solid #fecaca; }
 
-    .sec-label { font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:8px; }
+    .field { display:grid;grid-template-columns:120px 1fr;gap:12px;font-size:12.5px;margin-bottom:8px; }
+    .field-label { color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.04em; }
+    .field-value { font-weight:500; }
 
-    /* viewer */
+    .ai-note { background:var(--bg);border-left:3px solid var(--green);padding:10px 12px;margin-top:8px;font-size:12px;color:var(--muted);border-radius:0 6px 6px 0; }
+    .ai-note strong { color:var(--green);font-weight:600; }
+
     #viewer { display:none;min-height:100vh;background:var(--bg); }
-    .viewer-body { max-width:700px;margin:0 auto;padding:48px 24px 80px; }
-    .prose h1 { font-size:24px;font-weight:700;letter-spacing:-.5px;margin-bottom:8px; }
-    .prose h2 { font-size:18px;font-weight:600;margin-top:36px;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--border); }
-    .prose h3 { font-size:15px;font-weight:600;margin-top:24px;margin-bottom:8px; }
-    .prose h4 { font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin-top:16px;margin-bottom:6px; }
-    .prose p  { font-size:14px;line-height:1.75;color:#27272a;margin-bottom:14px; }
-    .prose ul,.prose ol { padding-left:20px;margin-bottom:14px; }
-    .prose li { font-size:14px;line-height:1.75;color:#27272a;margin-bottom:4px; }
-    .prose strong { font-weight:600;color:var(--text); }
-    .prose blockquote { border-left:3px solid var(--border);padding:8px 16px;margin:16px 0;background:var(--bg);border-radius:0 6px 6px 0; }
-    .prose blockquote p { margin-bottom:0;color:var(--muted); }
-    .prose code { font-family:'SF Mono',monospace;font-size:12.5px;background:var(--bg);border:1px solid var(--border);border-radius:3px;padding:1px 5px; }
-    .prose pre  { background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:14px 16px;overflow-x:auto;margin-bottom:16px; }
-    .prose pre code { border:none;background:none;padding:0; }
-    .prose table { width:100%;border-collapse:collapse;margin-bottom:16px;font-size:13px; }
-    .prose th { background:var(--bg);border:1px solid var(--border);padding:7px 12px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--muted); }
-    .prose td { border:1px solid var(--border);padding:7px 12px;vertical-align:top; }
-    .prose hr { border:none;border-top:1px solid var(--border);margin:28px 0; }
+    .viewer-body { max-width:800px;margin:0 auto;padding:56px 32px 80px; }
+    .prose h1 { font-size:28px;font-weight:700;letter-spacing:-.5px;margin-bottom:12px; }
+    .prose h2 { font-size:20px;font-weight:600;margin-top:40px;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--border); }
+    .prose h3 { font-size:16px;font-weight:600;margin-top:28px;margin-bottom:10px; }
+    .prose p  { font-size:15px;line-height:1.8;color:#27272a;margin-bottom:16px; }
+    .prose ul { padding-left:24px;margin-bottom:16px; }
+    .prose li { font-size:15px;line-height:1.8;color:#27272a;margin-bottom:6px; }
+    .prose strong { font-weight:700;color:var(--text); }
+    .prose blockquote { border-left:4px solid var(--border);padding:10px 18px;margin:18px 0;background:var(--bg);border-radius:0 8px 8px 0; }
+    .prose blockquote p { margin-bottom:0;color:var(--muted);font-size:14px; }
 
-    /* demo app */
-    #demo-wrapper { display:none; }
-    #demo-app { height:calc(100vh - 45px);overflow:hidden;display:flex; }
-    .app-sidebar { width:196px;flex-shrink:0;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow-y:auto; }
-    .app-brand { padding:13px 14px 11px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px; }
-    .app-brand-mark { width:26px;height:26px;background:var(--text);color:#fff;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700; }
-    .app-brand-name { font-size:13px;font-weight:700; }
-    .app-brand-ver  { font-size:10px;color:var(--muted); }
-    .app-nav { padding:7px 5px; }
-    .app-nav-label { font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);padding:5px 9px 4px; }
-    .app-nav-item { display:flex;align-items:center;gap:8px;padding:7px 9px;border-radius:5px;cursor:pointer;color:var(--muted);font-size:13px;transition:background .1s,color .1s; }
-    .app-nav-item:hover { background:var(--bg);color:var(--text); }
-    .app-nav-item.active { background:var(--bg);color:var(--text);font-weight:500; }
-    .app-nav-item svg { width:14px;height:14px;flex-shrink:0; }
-    .app-nav-badge { margin-left:auto;background:var(--red);color:#fff;font-size:10px;font-weight:700;padding:1px 5px;border-radius:9999px; }
-    .app-main { flex:1;display:flex;flex-direction:column;min-width:0;overflow:hidden; }
-    .app-topbar { background:var(--surface);border-bottom:1px solid var(--border);padding:9px 18px;display:flex;align-items:center;gap:10px;flex-shrink:0; }
-    .app-topbar-title { font-weight:600;font-size:14px; }
-    .app-topbar-right { margin-left:auto;display:flex;gap:8px;align-items:center; }
-    .ai-badge { background:#f0fdf4;border:1px solid #bbf7d0;color:var(--green);font-size:11px;font-weight:600;padding:2px 8px;border-radius:9999px; }
-    .app-panel { display:none;flex:1;overflow-y:auto; }
-    .app-panel.active { display:block; }
-
-    /* patient list */
-    .patient-search { padding:11px 16px;border-bottom:1px solid var(--border);background:var(--surface);display:flex;gap:7px; }
-    .search-box { flex:1;border:1px solid var(--border);border-radius:6px;padding:6px 11px;font-size:13px;outline:none;background:var(--bg);font-family:var(--font);color:var(--text); }
-    .search-box:focus { border-color:var(--border2);background:#fff; }
-    .patient-list-header { display:grid;grid-template-columns:1fr 100px 90px 90px;padding:6px 16px;background:var(--bg);border-bottom:1px solid var(--border);font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.04em; }
-    .patient-row { display:grid;grid-template-columns:1fr 100px 90px 90px;padding:10px 16px;border-bottom:1px solid var(--border);cursor:pointer;align-items:center; }
-    .patient-row:hover { background:var(--bg); }
-    .p-name { font-size:13px;font-weight:500; }
-    .p-meta { font-size:12px;color:var(--muted); }
-    .ptag { display:inline-flex;align-items:center;font-size:11px;font-weight:500;padding:2px 7px;border-radius:9999px; }
-    .ptag.pend  { background:#fef3c7;color:#b45309;border:1px solid #fde68a; }
-    .ptag.ok    { background:#f0fdf4;color:#15803d;border:1px solid #bbf7d0; }
-    .ptag.alert { background:#fef2f2;color:#b91c1c;border:1px solid #fecaca; }
-
-    /* patient detail */
-    .patient-detail-header { background:var(--surface);border-bottom:1px solid var(--border);padding:14px 18px;display:flex;align-items:center;gap:12px; }
-    .patient-avatar { width:40px;height:40px;border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0; }
-    .patient-detail-name { font-size:15px;font-weight:600; }
-    .patient-detail-meta { font-size:12px;color:var(--muted); }
-    .detail-back { font-size:12px;color:var(--muted);cursor:pointer;padding:3px 0; }
-    .detail-back:hover { color:var(--text); }
-    .detail-grid { display:grid;grid-template-columns:1fr 280px;gap:10px;padding:10px; }
-    .detail-card { background:var(--surface);border:1px solid var(--border);border-radius:7px;overflow:hidden; }
-    .detail-card-title { padding:9px 13px;border-bottom:1px solid var(--border);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--muted); }
-    .detail-section { padding:10px 13px;border-bottom:1px solid var(--border); }
-    .detail-section:last-child { border-bottom:none; }
-    .ds-label { font-size:11px;color:var(--muted);font-weight:500;margin-bottom:3px; }
-    .ds-value { font-size:13px;font-weight:500; }
-    .ai-box { background:#f0fdf4;border:1px solid #bbf7d0;border-radius:7px;padding:11px 13px;margin:10px; }
-    .ai-box-title { font-size:11px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:.05em;margin-bottom:7px; }
-    .ai-action { display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #bbf7d0; }
-    .ai-action:last-child { border-bottom:none;padding-bottom:0; }
-    .ai-action-text { font-size:12.5px;flex:1;line-height:1.4; }
-    .ai-btn { font-size:11.5px;font-weight:600;padding:3px 9px;border-radius:5px;border:none;cursor:pointer;background:var(--green);color:#fff;white-space:nowrap;font-family:var(--font); }
-    .ai-btn:hover { background:#15803d; }
-    .ai-btn.outline { background:#fff;color:var(--green);border:1px solid #bbf7d0; }
-
-    /* recetas */
-    .recetas-list { padding:10px; }
-    .receta-card { background:var(--surface);border:1px solid var(--border);border-radius:7px;margin-bottom:7px;overflow:hidden; }
-    .receta-header { padding:9px 13px;display:flex;align-items:center;gap:8px; }
-    .receta-drug { font-size:13px;font-weight:600;flex:1; }
-    .receta-body { padding:0 13px 10px;display:grid;grid-template-columns:repeat(3,1fr);gap:6px; }
-    .receta-field label { font-size:10px;color:var(--muted);text-transform:uppercase;font-weight:600;letter-spacing:.04em;display:block;margin-bottom:2px; }
-    .receta-field span  { font-size:12.5px;font-weight:500; }
-    .renew-bar { background:var(--bg);border-top:1px solid var(--border);padding:8px 13px;display:flex;align-items:center;gap:8px; }
-    .renew-info { font-size:11.5px;color:var(--muted);flex:1; }
-    .btn-renew { background:var(--text);color:#fff;border:none;border-radius:5px;padding:5px 12px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font); }
-    .btn-renew:hover { background:#27272a; }
-    .btn-renew.done { background:var(--green);cursor:default; }
-
-    /* nota */
-    .nota-wrap { padding:10px;display:flex;flex-direction:column;gap:9px; }
-    .nota-section { background:var(--surface);border:1px solid var(--border);border-radius:7px;overflow:hidden; }
-    .nota-section-title { padding:9px 13px;border-bottom:1px solid var(--border);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);display:flex;align-items:center;gap:6px; }
-    .auto-tag { background:#eff6ff;color:#2563eb;border:1px solid #bfdbfe;padding:1px 5px;border-radius:9999px;font-size:10px;font-weight:600; }
-    .nota-textarea { width:100%;padding:10px 13px;border:none;outline:none;resize:none;font-size:13.5px;line-height:1.65;color:var(--text);font-family:var(--font);min-height:80px;background:transparent; }
-    .nota-actions { padding:7px 13px;background:var(--bg);border-top:1px solid var(--border);display:flex;gap:7px;align-items:center; }
-    .nota-actions .auto-info { font-size:11.5px;color:var(--muted);flex:1; }
-    .btn-secondary { background:var(--bg);color:var(--muted);border:1px solid var(--border);border-radius:5px;padding:5px 11px;font-size:11.5px;cursor:pointer;font-family:var(--font); }
-
-    /* firma */
-    .firma-banner { background:#fefce8;border-bottom:1px solid #fef08a;padding:9px 16px;display:flex;align-items:center;gap:8px;font-size:12.5px; }
-    .firma-banner strong { color:#854d0e; }
-    .firma-row { display:flex;align-items:center;gap:11px;padding:10px 16px;border-bottom:1px solid var(--border); }
-    .firma-check { width:15px;height:15px;border:1.5px solid var(--border2);border-radius:3px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:9px;flex-shrink:0;background:#fff; }
-    .firma-check.checked { background:var(--text);border-color:var(--text);color:#fff; }
-    .firma-name { font-size:13px;font-weight:500;flex:1; }
-    .firma-meta { font-size:11.5px;color:var(--muted);margin-top:1px; }
-    .firma-bottom { padding:10px 16px;background:var(--surface);border-top:1px solid var(--border);display:flex;gap:7px;align-items:center; }
-    .firma-bottom .count { font-size:12px;color:var(--muted);flex:1; }
-    .btn-firmar { background:var(--text);color:#fff;border:none;border-radius:5px;padding:7px 16px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font); }
-    .btn-firmar:hover { background:#27272a; }
-
-    /* dashboard app */
-    .dash-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:7px;padding:10px 10px 0; }
-    .dash-stat { background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:11px 13px; }
-    .ds-n { font-size:20px;font-weight:700;letter-spacing:-.5px; }
-    .ds-l { font-size:11px;color:var(--muted);font-weight:500;margin-bottom:3px; }
-    .ds-s { font-size:11px;color:var(--muted);margin-top:2px; }
-    .today-list { padding:10px; }
-    .today-title { font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-bottom:7px; }
-    .today-card { background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:10px 13px;margin-bottom:6px;display:flex;align-items:center;gap:9px;cursor:pointer; }
-    .today-card:hover { background:var(--bg); }
-    .tc-icon { font-size:17px; }
-    .tc-info { flex:1; }
-    .tc-title { font-size:13px;font-weight:500; }
-    .tc-sub   { font-size:12px;color:var(--muted);margin-top:1px; }
-    .tc-action { font-size:12px;color:var(--blue);font-weight:500; }
-
-    .loading { text-align:center;padding:60px 0;color:var(--muted);font-size:13px; }
+    @media (max-width:800px) {
+      #dashboard { padding:40px 20px; }
+      .screens-grid { grid-template-columns:1fr; }
+    }
   </style>
 </head>
 <body>
 
 <!-- ═══ DASHBOARD ═══ -->
 <div id="dashboard">
-  <div style="max-width:680px;margin:0 auto;padding:48px 24px">
 
-    <div class="logo" style="margin-bottom:6px">
-      <div class="logo-mark">UM</div>
-      <h1>Umbramed — EIC Step 1</h1>
-    </div>
-    <p class="sub">Solo hay que hacer 4 cosas para enviar el Step 1. No cartas, no partners, no datos clínicos todavía. Resultado en <strong>4–6 semanas</strong> tras enviar.</p>
-
-    <!-- 4 tasks -->
-    <div class="sec-label">Qué hay que hacer — en orden</div>
-    <div class="card" style="margin-bottom:20px">
-      <div class="task-row">
-        <div class="tdot done"></div>
-        <div>
-          <div class="ttitle done">Guión del vídeo listo</div>
-          <div class="texp">Ya está escrito. Solo falta grabarlo.</div>
-        </div>
-      </div>
-      <div class="task-row">
-        <div class="tdot hot"></div>
-        <div>
-          <div class="ttitle">① Grabar el vídeo de 3 minutos — Valerio</div>
-          <div class="texp">Bata blanca, consulta, guión abajo. Los evaluadores lo ven primero y vale el 50% de la nota. Es la tarea más urgente de todo.</div>
-        </div>
-      </div>
-      <div class="task-row">
-        <div class="tdot hot"></div>
-        <div>
-          <div class="ttitle">② Pitch deck de 10 diapositivas — Sami</div>
-          <div class="texp">Problema → solución → mercado → por qué Umbramed → por qué Valerio → qué pedimos. Valerio revisa la parte clínica.</div>
-        </div>
-      </div>
-      <div class="task-row">
-        <div class="tdot"></div>
-        <div>
-          <div class="ttitle">③ Propuesta corta de 12 páginas — Sami</div>
-          <div class="texp">Formulario principal del Step 1. Ya existe el dossier de base. Valerio solo revisa las secciones clínicas.</div>
-        </div>
-      </div>
-      <div class="task-row">
-        <div class="tdot"></div>
-        <div>
-          <div class="ttitle">④ Estimación de costes — Sami</div>
-          <div class="texp">Solo orientativa. Equipo, validación clínica, regulatorio. No hace falta contabilidad detallada.</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Demo -->
-    <div class="demo-hero" onclick="openDemo()">
-      <div class="demo-label">Demo del producto</div>
-      <div class="demo-title">Así funciona Umbramed — pruébalo</div>
-      <div class="demo-sub">Para el vídeo y el pitch necesitas entender bien cómo se ve el software. Navega por la demo: pacientes, recetas, firma, notas clínicas.</div>
-      <div class="demo-btn">▶ Abrir demo</div>
-    </div>
-
-    <!-- Docs — only what's needed -->
-    <div class="sec-label">Documentos que necesitas</div>
-    <div class="card">
-      <div class="doc-row" onclick="openDoc('public/VALERIO_VIDEO_SCRIPT_EIC.md','Guión del Vídeo')">
-        <span class="doc-icon">🎬</span>
-        <div class="doc-info">
-          <div class="doc-name">Guión del vídeo — léelo antes de grabar</div>
-          <div class="doc-desc">Frase por frase lo que Valerio dice en cámara, con instrucciones de grabación.</div>
-        </div>
-        <span class="arr">→</span>
-      </div>
-      <div class="doc-row" onclick="openDoc('public/VALERIO_PLAN_ACCION_EJECUTIVO.md','Plan de Acción')">
-        <span class="doc-icon">🗺️</span>
-        <div class="doc-info">
-          <div class="doc-name">Plan de acción completo — para Sami</div>
-          <div class="doc-desc">Contexto completo del proyecto, convocatorias y estructura de la solicitud.</div>
-        </div>
-        <span class="arr">→</span>
-      </div>
-    </div>
-
-    <div style="text-align:center;color:#a1a1aa;font-size:11.5px;padding:20px 0 0">Umbramed · EIC Step 1 · Feb 2026</div>
+  <div class="logo" style="margin-bottom:8px">
+    <div class="logo-mark">UM</div>
+    <h1>Umbramed — EIC Step 1</h1>
   </div>
+  <p class="sub">Solo 4 cosas para enviar. Sin cartas, sin partners, sin estudios clínicos. Resultado en <strong>4–6 semanas</strong>.</p>
+
+  <!-- 4 tasks -->
+  <div class="sec-title">Las 4 tareas — nada más</div>
+  <div class="card" style="margin-bottom:28px">
+    <div class="task-row">
+      <div class="tdot done"></div>
+      <div>
+        <div class="ttitle done">Guión del vídeo listo</div>
+        <div class="texp">Ya está escrito. Solo falta grabarlo.</div>
+      </div>
+    </div>
+    <div class="task-row">
+      <div class="tdot hot"></div>
+      <div>
+        <div class="ttitle">① Valerio graba el vídeo de 3 minutos</div>
+        <div class="texp">Bata blanca, consulta, guión abajo. Los evaluadores lo ven primero y vale el 50% de la nota. Es la tarea más urgente de todo.</div>
+      </div>
+    </div>
+    <div class="task-row">
+      <div class="tdot hot"></div>
+      <div>
+        <div class="ttitle">② Sami prepara pitch deck (10 diapositivas)</div>
+        <div class="texp">Problema → solución → mercado → por qué Umbramed → por qué Valerio → qué pedimos. Valerio revisa la parte clínica.</div>
+      </div>
+    </div>
+    <div class="task-row">
+      <div class="tdot"></div>
+      <div>
+        <div class="ttitle">③ Sami redacta propuesta corta (12 páginas)</div>
+        <div class="texp">Formulario principal del Step 1. Ya existe el dossier de base. Valerio solo revisa las secciones clínicas.</div>
+      </div>
+    </div>
+    <div class="task-row">
+      <div class="tdot"></div>
+      <div>
+        <div class="ttitle">④ Sami prepara estimación de costes</div>
+        <div class="texp">Solo orientativa. Equipo, validación clínica, regulatorio. No hace falta contabilidad detallada.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Screenshots -->
+  <div class="sec-title">Cómo funciona Umbramed — capturas estáticas</div>
+  <p style="color:var(--muted);font-size:14px;margin-bottom:16px;">Así verán los evaluadores del EIC el software en acción. Por esto es importante que Valerio entienda bien cómo se ve.</p>
+
+  <div class="screens-grid">
+
+    <!-- Screen 1: Patient List -->
+    <div class="screen">
+      <div class="screen-title">📋 Panel de pacientes de hoy</div>
+      <div class="screen-body">
+        <div class="screen-content">
+          <div class="row header">
+            <span style="flex:1">Paciente</span>
+            <span style="width:100px">Última visita</span>
+            <span style="width:90px">Estado</span>
+          </div>
+          <div class="row item">
+            <div class="item-info">
+              <div class="item-title">García López, María</div>
+              <div class="item-meta">67 años · SAS-441823 · HTA + DM2</div>
+            </div>
+            <span style="width:100px;text-align:right;color:var(--muted);font-size:12px">Hoy</span>
+            <span class="badge red">⚠ Alerta</span>
+          </div>
+          <div class="row item">
+            <div class="item-info">
+              <div class="item-title">Rodríguez Pérez, Antonio</div>
+              <div class="item-meta">54 años · SAS-309712 · EPOC moderado</div>
+            </div>
+            <span style="width:100px;text-align:right;color:var(--muted);font-size:12px">Ayer</span>
+            <span class="badge amber">Pendiente</span>
+          </div>
+          <div class="row item">
+            <div class="item-info">
+              <div class="item-title">Gómez Ruiz, Francisco</div>
+              <div class="item-meta">78 años · SAS-503467 · Insuf. cardíaca</div>
+            </div>
+            <span style="width:100px;text-align:right;color:var(--muted);font-size:12px">Hoy</span>
+            <span class="badge red">⚠ Alerta</span>
+          </div>
+          <div class="ai-note"><strong>✦ IA:</strong> 3 pacientes con alertas detectadas automáticamente</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Screen 2: Prescription Renewal -->
+    <div class="screen">
+      <div class="screen-title">💊 Renovación de recetas — revisadas por IA</div>
+      <div class="screen-body">
+        <div class="screen-content">
+          <div style="background:var(--bg);padding:10px;border-radius:6px;margin-bottom:10px;">
+            <div style="font-weight:600;font-size:13px;margin-bottom:4px">Metformina 850 mg</div>
+            <div style="font-size:12px;color:var(--muted)">Paciente: García López, María</div>
+          </div>
+          <div class="field">
+            <div class="field-label">Posología</div>
+            <div class="field-value">1 comprimido cada 12 horas</div>
+          </div>
+          <div class="field">
+            <div class="field-label">Duración</div>
+            <div class="field-value">90 días</div>
+          </div>
+          <div class="field">
+            <div class="field-label">Estado</div>
+            <div class="field-value" style="display:flex;align-items:center;gap:8px">
+              <span class="badge green">✓ Sin interacciones</span>
+            </div>
+          </div>
+          <div class="ai-note" style="margin-top:12px;margin-bottom:0"><strong>✦ IA verificó:</strong> Dosis correcta, sin interacciones con Enalapril, sin contraindicaciones con antecedentes del paciente</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Screen 3: Clinical Notes -->
+    <div class="screen">
+      <div class="screen-title">📝 Nota clínica — borrador generado por IA</div>
+      <div class="screen-body">
+        <div class="screen-content">
+          <div style="font-weight:600;margin-bottom:8px;font-size:13px">Motivo de consulta</div>
+          <div style="padding:8px;background:var(--bg);border-radius:6px;font-size:13px;line-height:1.6;margin-bottom:12px">Revisión de patología crónica — HTA y DM2</div>
+
+          <div style="font-weight:600;margin-bottom:4px;font-size:13px;display:flex;align-items:center;gap:6px">
+            Anamnesis y exploración
+            <span style="font-size:10px;background:#eff6ff;color:#2563eb;border:1px solid #bfdbfe;padding:2px 6px;border-radius:9999px;font-weight:600">IA — generado</span>
+          </div>
+          <div style="padding:8px;background:var(--bg);border-radius:6px;font-size:12.5px;line-height:1.6;color:#27272a;margin-bottom:12px">
+            Paciente de 67 años con HTA y DM2 en tratamiento con Metformina 850mg y Enalapril 10mg. Refiere buen cumplimiento. TA 142/88 mmHg, FC 74 lpm. Glucemia 118 mg/dL. Sin síntomas de descompensación.
+          </div>
+
+          <div style="font-weight:600;margin-bottom:4px;font-size:13px;display:flex;align-items:center;gap:6px">
+            Plan terapéutico
+            <span style="font-size:10px;background:#eff6ff;color:#2563eb;border:1px solid #bfdbfe;padding:2px 6px;border-radius:9999px;font-weight:600">IA — sugerido</span>
+          </div>
+          <div style="padding:8px;background:var(--bg);border-radius:6px;font-size:12.5px;line-height:1.6;color:#27272a">
+            Mantener tratamiento actual. Control en 3 meses. Solicitar HbA1c si no disponible en últimos 3 meses.
+          </div>
+
+          <div class="ai-note" style="margin-top:12px;margin-bottom:0"><strong>✦ IA basado en:</strong> Guías ESH/ESC 2023 + historial del paciente</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Screen 4: E-Signature -->
+    <div class="screen">
+      <div class="screen-title">✍️ Firma masiva — un clic para firmar todo</div>
+      <div class="screen-body">
+        <div class="screen-content">
+          <div style="background:#fefce8;border-left:3px solid #fef08a;padding:8px 10px;border-radius:0 6px 6px 0;margin-bottom:10px;font-size:12px;color:#854d0e">
+            <strong>⚡ 8 documentos listos.</strong> Ninguno tiene alertas de seguridad.
+          </div>
+
+          <div class="row header">
+            <span style="width:16px"></span>
+            <span style="flex:1">Documento</span>
+            <span style="width:80px">Estado</span>
+          </div>
+
+          <div class="row item">
+            <input type="checkbox" checked style="width:16px;height:16px;cursor:pointer">
+            <div style="flex:1">
+              <div style="font-size:13px;font-weight:500">Metformina 850mg × 90 días</div>
+              <div style="font-size:12px;color:var(--muted)">García López, María</div>
+            </div>
+            <span style="font-size:11px;color:var(--green);font-weight:600">✓ OK</span>
+          </div>
+
+          <div class="row item">
+            <input type="checkbox" checked style="width:16px;height:16px;cursor:pointer">
+            <div style="flex:1">
+              <div style="font-size:13px;font-weight:500">Apixabán 5mg × 90 días</div>
+              <div style="font-size:12px;color:var(--muted)">Martínez Sánchez, Elena</div>
+            </div>
+            <span style="font-size:11px;color:var(--red);font-weight:600">⚠ Revisar</span>
+          </div>
+
+          <div class="row item">
+            <input type="checkbox" checked style="width:16px;height:16px;cursor:pointer">
+            <div style="flex:1">
+              <div style="font-size:13px;font-weight:500">Nota clínica revisión DM2</div>
+              <div style="font-size:12px;color:var(--muted)">García López, María</div>
+            </div>
+            <span style="font-size:11px;color:var(--green);font-weight:600">✓ OK</span>
+          </div>
+
+          <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border);display:flex;align-items:center;gap:10px">
+            <span style="flex:1;font-size:13px;font-weight:600;color:var(--muted)">3 seleccionados</span>
+            <button style="background:var(--text);color:#fff;border:none;padding:7px 16px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer">Firmar todo</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Docs -->
+  <div class="sec-title">Documentos que necesitas</div>
+  <div class="card">
+    <div class="doc-row" onclick="openDoc('public/VALERIO_VIDEO_SCRIPT_EIC.md','Guión del Vídeo')">
+      <span class="doc-icon">🎬</span>
+      <div class="doc-info">
+        <div class="doc-name">Guión del vídeo — léelo antes de grabar</div>
+        <div class="doc-desc">Frase por frase lo que Valerio dice en cámara, con instrucciones de grabación técnica.</div>
+      </div>
+      <span class="arr">→</span>
+    </div>
+    <div class="doc-row" onclick="openDoc('public/VALERIO_PLAN_ACCION_EJECUTIVO.md','Plan de Acción')">
+      <span class="doc-icon">🗺️</span>
+      <div class="doc-info">
+        <div class="doc-name">Plan de acción — para Sami (contexto completo)</div>
+        <div class="doc-desc">Convocatorias, estructura de la solicitud y trasfondo del proyecto para que Sami prepare la propuesta.</div>
+      </div>
+      <span class="arr">→</span>
+    </div>
+  </div>
+
+  <div style="text-align:center;color:#a1a1aa;font-size:12px;padding:24px 0 0">Umbramed · EIC Step 1 · Febrero 2026</div>
+
 </div>
 
 <!-- ═══ VIEWER ═══ -->
@@ -290,319 +331,25 @@
     <span class="topbar-label" id="viewer-title"></span>
   </div>
   <div class="viewer-body">
-    <div class="prose" id="viewer-content"><div class="loading">Cargando…</div></div>
-  </div>
-</div>
-
-<!-- ═══ DEMO ═══ -->
-<div id="demo-wrapper">
-  <div class="topbar">
-    <span class="back-btn" onclick="closeAll()">← Volver</span>
-    <span class="topbar-label">Demo — Umbramed v1.0</span>
-    <div style="margin-left:auto"><span class="ai-badge">IA activa</span></div>
-  </div>
-  <div id="demo-app">
-    <nav class="app-sidebar">
-      <div class="app-brand">
-        <div class="app-brand-mark">UM</div>
-        <div>
-          <div class="app-brand-name">Umbramed</div>
-          <div class="app-brand-ver">v1.0 — Demo</div>
-        </div>
-      </div>
-      <div class="app-nav">
-        <div class="app-nav-label">Principal</div>
-        <div class="app-nav-item active" id="nav-inicio"    onclick="showPanel('inicio')">
-          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg>
-          Inicio
-        </div>
-        <div class="app-nav-item" id="nav-pacientes" onclick="showPanel('pacientes')">
-          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6" cy="5" r="2.5"/><path d="M1 13c0-2.76 2.24-5 5-5h1M12 10v4M14 12h-4"/></svg>
-          Pacientes
-        </div>
-        <div class="app-nav-item" id="nav-recetas" onclick="showPanel('recetas')">
-          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 1h7l3 3v11H3V1z"/><path d="M10 1v3h3M5 7h6M5 10h4"/></svg>
-          Recetas
-          <span class="app-nav-badge">14</span>
-        </div>
-        <div class="app-nav-item" id="nav-firma" onclick="showPanel('firma')">
-          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 12l2-2 8-8 2 2-8 8-2 0 0-2zM12 4l-2-2"/></svg>
-          Firma masiva
-          <span class="app-nav-badge">8</span>
-        </div>
-        <div class="app-nav-item" id="nav-nota" onclick="showPanel('nota')">
-          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 2h12v10l-3 3H2V2z"/><path d="M5 6h6M5 9h4M11 12v-3h3"/></svg>
-          Nota clínica
-        </div>
-      </div>
-    </nav>
-    <div class="app-main">
-      <div class="app-topbar">
-        <span class="app-topbar-title" id="panel-title">Inicio</span>
-        <div class="app-topbar-right">
-          <span style="font-size:12px;color:var(--muted)">Dr. Valerio Trigos</span>
-          <div style="width:26px;height:26px;border-radius:50%;background:var(--text);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;">VT</div>
-        </div>
-      </div>
-
-      <!-- Inicio -->
-      <div class="app-panel active" id="panel-inicio">
-        <div class="dash-grid">
-          <div class="dash-stat"><div class="ds-l">Recetas pendientes</div><div class="ds-n">14</div><div class="ds-s">8 pre-aprobadas por IA</div></div>
-          <div class="dash-stat"><div class="ds-l">Tiempo ahorrado hoy</div><div class="ds-n">1h 42m</div><div class="ds-s">vs. proceso manual</div></div>
-          <div class="dash-stat"><div class="ds-l">Pacientes atendidos</div><div class="ds-n">23 / 28</div><div class="ds-s">citados hoy</div></div>
-        </div>
-        <div class="today-list">
-          <div class="today-title">Umbramed ha preparado estas acciones</div>
-          <div class="today-card" onclick="showPanel('recetas')">
-            <span class="tc-icon">💊</span>
-            <div class="tc-info"><div class="tc-title">8 recetas listas para revisar y firmar</div><div class="tc-sub">IA ha verificado interacciones y dosis</div></div>
-            <span class="tc-action">Revisar →</span>
-          </div>
-          <div class="today-card" onclick="showPanel('firma')">
-            <span class="tc-icon">✍️</span>
-            <div class="tc-info"><div class="tc-title">Firma masiva — 8 documentos listos</div><div class="tc-sub">Firma todo de un solo clic</div></div>
-            <span class="tc-action">Firmar →</span>
-          </div>
-          <div class="today-card" onclick="showPanel('nota')">
-            <span class="tc-icon">📝</span>
-            <div class="tc-info"><div class="tc-title">Borrador de nota clínica listo</div><div class="tc-sub">Umbramed lo ha generado — solo revisa y confirma</div></div>
-            <span class="tc-action">Revisar →</span>
-          </div>
-          <div class="today-card" onclick="showPanel('pacientes')">
-            <span class="tc-icon">🔔</span>
-            <div class="tc-info"><div class="tc-title">3 pacientes con alertas clínicas</div><div class="tc-sub">Valores fuera de rango en analíticas recientes</div></div>
-            <span class="tc-action">Ver →</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Pacientes -->
-      <div class="app-panel" id="panel-pacientes">
-        <div class="patient-search">
-          <input class="search-box" placeholder="Buscar paciente…" oninput="filterPatients(this.value)" />
-        </div>
-        <div class="patient-list-header"><div>Paciente</div><div>Última visita</div><div>Estado</div><div>Receta</div></div>
-        <div id="patient-list-body"></div>
-      </div>
-
-      <!-- Detalle paciente -->
-      <div class="app-panel" id="panel-paciente">
-        <div class="patient-detail-header">
-          <span class="detail-back" onclick="showPanel('pacientes')">← Pacientes</span>
-          <div class="patient-avatar" id="det-avatar">👤</div>
-          <div>
-            <div class="patient-detail-name" id="det-name">—</div>
-            <div class="patient-detail-meta" id="det-meta">—</div>
-          </div>
-        </div>
-        <div class="detail-grid">
-          <div>
-            <div class="detail-card" style="margin-bottom:9px">
-              <div class="detail-card-title">Datos clínicos</div>
-              <div class="detail-section"><div class="ds-label">Diagnóstico</div><div class="ds-value" id="det-diag">—</div></div>
-              <div class="detail-section"><div class="ds-label">Medicación</div><div class="ds-value" id="det-med">—</div></div>
-              <div class="detail-section"><div class="ds-label">Última analítica</div><div class="ds-value" id="det-anal">—</div></div>
-            </div>
-            <div class="detail-card">
-              <div class="detail-card-title">Historial</div>
-              <div class="detail-section" style="font-size:12.5px;color:var(--muted);line-height:1.6" id="det-historial">—</div>
-            </div>
-          </div>
-          <div>
-            <div class="ai-box">
-              <div class="ai-box-title">✦ Sugerencias de Umbramed IA</div>
-              <div id="det-ai-actions"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Recetas -->
-      <div class="app-panel" id="panel-recetas">
-        <div class="recetas-list" id="recetas-list-body"></div>
-      </div>
-
-      <!-- Nota -->
-      <div class="app-panel" id="panel-nota">
-        <div class="nota-wrap">
-          <div class="nota-section">
-            <div class="nota-section-title">Motivo de consulta <span class="auto-tag">manual</span></div>
-            <textarea class="nota-textarea">Paciente acude por revisión de patología crónica — HTA y DM2.</textarea>
-          </div>
-          <div class="nota-section">
-            <div class="nota-section-title">Anamnesis y exploración <span class="auto-tag">IA — generado</span></div>
-            <textarea class="nota-textarea" style="min-height:100px" id="nota-anamnesis">Paciente de 67 años con HTA y DM2 en tratamiento con Metformina 850mg y Enalapril 10mg. Refiere buen cumplimiento. TA 142/88 mmHg, FC 74 lpm. Glucemia capilar 118 mg/dL. Sin síntomas de descompensación.</textarea>
-            <div class="nota-actions">
-              <span class="auto-info">✦ Generado por IA — revisa antes de guardar</span>
-              <button class="btn-secondary" onclick="regenNota()">Regenerar</button>
-              <button class="btn-renew" onclick="this.textContent='✓ Guardado';this.classList.add('done')">Confirmar</button>
-            </div>
-          </div>
-          <div class="nota-section">
-            <div class="nota-section-title">Plan terapéutico <span class="auto-tag">IA — sugerido</span></div>
-            <textarea class="nota-textarea">Mantener tratamiento actual. Control en 3 meses o antes si TA > 160/100. Solicitar HbA1c si no disponible en últimos 3 meses.</textarea>
-            <div class="nota-actions">
-              <span class="auto-info">✦ Basado en guías ESH/ESC 2023</span>
-              <button class="btn-renew" onclick="this.textContent='✓ Aprobado';this.classList.add('done')">Aprobar</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Firma -->
-      <div class="app-panel" id="panel-firma">
-        <div class="firma-banner">⚡ <strong>8 documentos listos.</strong> Ninguno tiene alertas de seguridad.</div>
-        <div id="firma-list-body"></div>
-        <div class="firma-bottom">
-          <span class="count" id="firma-count">0 seleccionados</span>
-          <button class="btn-secondary" onclick="selectAllFirma()">Seleccionar todo</button>
-          <button class="btn-firmar" onclick="firmarTodo()">Firmar</button>
-        </div>
-      </div>
-    </div>
+    <div class="prose" id="viewer-content"><div style="text-align:center;padding:60px 0;color:var(--muted)">Cargando…</div></div>
   </div>
 </div>
 
 <script>
-/* NAV */
-function closeAll() {
-  ['dashboard','viewer','demo-wrapper'].forEach(id=>{
-    document.getElementById(id).style.display='none';
-  });
+function closeAll(){
   document.getElementById('dashboard').style.display='block';
+  document.getElementById('viewer').style.display='none';
   window.scrollTo(0,0);
 }
-function openDoc(path,title) {
+function openDoc(path,title){
   document.getElementById('dashboard').style.display='none';
   document.getElementById('viewer').style.display='block';
   document.getElementById('viewer-title').textContent=title;
-  document.getElementById('viewer-content').innerHTML='<div class="loading">Cargando…</div>';
+  document.getElementById('viewer-content').innerHTML='<div style="text-align:center;padding:60px 0;color:var(--muted)">Cargando…</div>';
   window.scrollTo(0,0);
   fetch(path).then(r=>r.text()).then(md=>{
     document.getElementById('viewer-content').innerHTML=marked.parse(md);
   });
-}
-function openDemo() {
-  document.getElementById('dashboard').style.display='none';
-  document.getElementById('demo-wrapper').style.display='block';
-  window.scrollTo(0,0);
-  initDemo();
-}
-
-/* DATA */
-const patients = [
-  {id:1,name:'García López, María',age:67,nhc:'SAS-441823',diag:'HTA + DM2',ultima:'Hoy',estado:'alert',receta:'Pendiente',med:'Metformina 850mg · Enalapril 10mg',anal:'HbA1c 7.8%',historial:'Revisión mensual estable. Última descompensación ago 2025.',ai:[{icon:'💊',text:'<strong>Renovar receta</strong> — Metformina 850mg × 90 días',ok:true},{icon:'📊',text:'<strong>Solicitar HbA1c</strong> — última hace 3 meses',ok:true},{icon:'⚠️',text:'<strong>TA elevada</strong> — valorar ajuste Enalapril',ok:false}]},
-  {id:2,name:'Rodríguez Pérez, Antonio',age:54,nhc:'SAS-309712',diag:'EPOC moderado',ultima:'Ayer',estado:'pend',receta:'Pendiente',med:'Salbutamol 100mcg · Budesonida 400mcg',anal:'Espirometría pendiente',historial:'Exacerbación leve en diciembre. Buen cumplimiento.',ai:[{icon:'💊',text:'<strong>Renovar inhaladores</strong> — 90 días',ok:true},{icon:'🔬',text:'<strong>Solicitar espirometría</strong> de control',ok:true}]},
-  {id:3,name:'Martínez Sánchez, Elena',age:72,nhc:'SAS-518934',diag:'FA + anticoagulación',ultima:'Lun',estado:'alert',receta:'Pendiente',med:'Apixabán 5mg · Bisoprolol 2.5mg',anal:'NACO — sin INR',historial:'Control estable. Sin sangrados.',ai:[{icon:'💊',text:'<strong>Renovar Apixabán</strong> — crítico en FA',ok:true},{icon:'⚠️',text:'<strong>Revisar interacción</strong> con AINE de urgencias',ok:false}]},
-  {id:4,name:'Fernández Gil, José',age:45,nhc:'SAS-221045',diag:'Hiperlipidemia',ultima:'12 ene',estado:'ok',receta:'Al día',med:'Atorvastatina 40mg',anal:'Col total 198 mg/dL',historial:'Bien controlado. Sin incidencias.',ai:[{icon:'✅',text:'Sin acciones pendientes — control en 6 meses',ok:true}]},
-  {id:5,name:'Gómez Ruiz, Francisco',age:78,nhc:'SAS-503467',diag:'Insuficiencia cardiaca FC II',ultima:'Hoy',estado:'alert',receta:'Pendiente',med:'Furosemida 40mg · Carvedilol 6.25mg · Ramipril 5mg',anal:'BNP 380 pg/mL (↑)',historial:'Ingreso breve nov 2025 por descompensación.',ai:[{icon:'⚠️',text:'<strong>BNP elevado</strong> — valorar ajuste Furosemida',ok:false},{icon:'💊',text:'<strong>Renovar triple terapia</strong> IC',ok:true}]},
-];
-const recetas = [
-  {drug:'Metformina 850 mg',dosif:'1 comp./12h',dur:'90 días',pac:'García López, María',ai:'sin interacciones'},
-  {drug:'Enalapril 10 mg',dosif:'1 comp./24h',dur:'90 días',pac:'García López, María',ai:'sin interacciones'},
-  {drug:'Furosemida 40 mg',dosif:'1 comp./24h',dur:'30 días',pac:'Gómez Ruiz, Francisco',ai:'revisar K+'},
-  {drug:'Apixabán 5 mg',dosif:'1 comp./12h',dur:'90 días',pac:'Martínez Sánchez, Elena',ai:'⚠️ interacción AINE'},
-  {drug:'Salbutamol 100 mcg',dosif:'2 puls. en crisis',dur:'90 días',pac:'Rodríguez Pérez, Antonio',ai:'sin interacciones'},
-];
-const firmas = [
-  {desc:'Metformina 850mg × 90 días',pac:'García López, María',ok:true,checked:false},
-  {desc:'Enalapril 10mg × 90 días',pac:'García López, María',ok:true,checked:false},
-  {desc:'Apixabán 5mg × 90 días',pac:'Martínez Sánchez, Elena',ok:false,checked:false},
-  {desc:'Carvedilol 6.25mg × 30 días',pac:'Gómez Ruiz, Francisco',ok:true,checked:false},
-  {desc:'Informe derivación a Cardiología',pac:'Gómez Ruiz, Francisco',ok:true,checked:false},
-  {desc:'Salbutamol 100mcg × 90 días',pac:'Rodríguez Pérez, Antonio',ok:true,checked:false},
-  {desc:'Nota clínica revisión DM2',pac:'García López, María',ok:true,checked:false},
-  {desc:'Levotiroxina 75mcg × 90 días',pac:'López Torres, Carmen',ok:true,checked:false},
-];
-
-let inited=false;
-function initDemo(){
-  if(inited)return; inited=true;
-  renderPatients(patients); renderRecetas(); renderFirmas();
-}
-const titleMap={inicio:'Inicio',pacientes:'Pacientes',recetas:'Recetas pendientes',firma:'Firma masiva',nota:'Nota clínica',paciente:'Detalle paciente'};
-function showPanel(name){
-  document.querySelectorAll('.app-panel').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.app-nav-item').forEach(n=>n.classList.remove('active'));
-  document.getElementById('panel-'+name).classList.add('active');
-  document.getElementById('panel-title').textContent=titleMap[name]||name;
-  const nav=document.getElementById('nav-'+name);
-  if(nav) nav.classList.add('active');
-}
-function renderPatients(list){
-  document.getElementById('patient-list-body').innerHTML=list.map(p=>`
-    <div class="patient-row" onclick="openPatient(${p.id})">
-      <div><div class="p-name">${p.name}</div><div class="p-meta">${p.age} años · ${p.nhc}</div></div>
-      <div class="p-meta">${p.ultima}</div>
-      <div>${stag(p.estado)}</div>
-      <div>${p.receta==='Al día'?'<span class="ptag ok">✓ Al día</span>':'<span class="ptag pend">Pendiente</span>'}</div>
-    </div>`).join('');
-}
-function stag(s){const m={alert:['alert','⚠ Alerta'],ok:['ok','✓ Estable'],pend:['pend','Pendiente']};const[c,l]=m[s]||['',''];return`<span class="ptag ${c}">${l}</span>`;}
-function filterPatients(q){renderPatients(patients.filter(p=>p.name.toLowerCase().includes(q.toLowerCase())));}
-function openPatient(id){
-  const p=patients.find(x=>x.id===id);if(!p)return;
-  document.getElementById('det-avatar').textContent=p.name[0];
-  document.getElementById('det-name').textContent=p.name;
-  document.getElementById('det-meta').textContent=`${p.age} años · ${p.nhc} · ${p.diag}`;
-  document.getElementById('det-diag').textContent=p.diag;
-  document.getElementById('det-med').textContent=p.med;
-  document.getElementById('det-anal').textContent=p.anal;
-  document.getElementById('det-historial').textContent=p.historial;
-  document.getElementById('det-ai-actions').innerHTML=p.ai.map(a=>`
-    <div class="ai-action">
-      <span style="font-size:14px">${a.icon}</span>
-      <span class="ai-action-text">${a.text}</span>
-      <button class="ai-btn ${a.ok?'':'outline'}" onclick="this.textContent='✓';this.disabled=true">${a.ok?'Aplicar':'Revisar'}</button>
-    </div>`).join('');
-  showPanel('paciente');
-}
-function renderRecetas(){
-  document.getElementById('recetas-list-body').innerHTML=recetas.map((r,i)=>`
-    <div class="receta-card">
-      <div class="receta-header">
-        <span class="receta-drug">${r.drug}</span>
-        <span class="ptag ${r.ai.includes('⚠️')?'alert':'ok'}" style="font-size:11px">IA: ${r.ai}</span>
-      </div>
-      <div class="receta-body">
-        <div class="receta-field"><label>Posología</label><span>${r.dosif}</span></div>
-        <div class="receta-field"><label>Duración</label><span>${r.dur}</span></div>
-        <div class="receta-field"><label>Paciente</label><span style="font-size:12px">${r.pac}</span></div>
-      </div>
-      <div class="renew-bar">
-        <span class="renew-info">✦ Umbramed ha verificado interacciones automáticamente</span>
-        <button class="btn-renew" onclick="this.textContent='✓ Renovada';this.classList.add('done');this.disabled=true">Renovar</button>
-      </div>
-    </div>`).join('');
-}
-function renderFirmas(){
-  document.getElementById('firma-list-body').innerHTML=firmas.map((f,i)=>`
-    <div class="firma-row">
-      <div class="firma-check" id="fc-${i}" onclick="toggleFirma(${i})"></div>
-      <div style="flex:1">
-        <div class="firma-name">${f.desc}</div>
-        <div class="firma-meta">${f.pac} · ${f.ok?'<span style="color:var(--green)">✓ verificado por IA</span>':'<span style="color:var(--red)">⚠ revisar</span>'}</div>
-      </div>
-    </div>`).join('');
-}
-function toggleFirma(i){
-  firmas[i].checked=!firmas[i].checked;
-  const el=document.getElementById('fc-'+i);
-  el.classList.toggle('checked',firmas[i].checked);
-  el.textContent=firmas[i].checked?'✓':'';
-  document.getElementById('firma-count').textContent=firmas.filter(f=>f.checked).length+' seleccionados';
-}
-function selectAllFirma(){firmas.forEach((_,i)=>toggleFirma(i<firmas.length&&!firmas[i].checked?i:-1));firmas.forEach((f,i)=>{if(!f.checked)toggleFirma(i);});}
-function firmarTodo(){
-  const n=firmas.filter(f=>f.checked).length;
-  if(!n){return;}
-  document.getElementById('firma-list-body').innerHTML=`<div style="padding:40px;text-align:center;color:var(--green);font-size:15px;font-weight:600">✓ ${n} documento${n>1?'s':''} firmado${n>1?'s':''}</div>`;
-}
-function regenNota(){
-  const ta=document.getElementById('nota-anamnesis');
-  ta.value='Regenerando…';
-  setTimeout(()=>{ta.value='Paciente de 67 años con HTA y DM2 conocidos. Acude a revisión programada. Buen cumplimiento terapéutico. TA 142/88 mmHg, FC 74 lpm, glucemia capilar 118 mg/dL. Sin edemas. Abdomen sin hallazgos. Sin clínica cardiovascular activa.';},800);
 }
 </script>
 </body>
