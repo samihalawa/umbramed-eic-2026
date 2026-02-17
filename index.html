@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Umbramed — EIC 2026 Project Hub</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #f4f4f5;
+      --surface:  #ffffff;
+      --border:   #e4e4e7;
+      --border2:  #d4d4d8;
+      --text:     #18181b;
+      --muted:    #71717a;
+      --accent:   #18181b;
+      --accent-fg:#f4f4f5;
+      --green:    #16a34a;
+      --amber:    #d97706;
+      --blue:     #2563eb;
+      --radius:   0.5rem;
+      --radius-sm:0.375rem;
+      --font: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
+    }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      font-size: 13.5px;
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+
+    /* ── Layout ── */
+    .shell { display: flex; min-height: 100vh; }
+
+    /* ── Sidebar ── */
+    .sidebar {
+      width: 220px;
+      flex-shrink: 0;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      padding: 0;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+    }
+
+    .sidebar-logo {
+      padding: 14px 16px 12px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .logo-mark {
+      width: 28px; height: 28px;
+      background: var(--accent);
+      border-radius: var(--radius-sm);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--accent-fg);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+    .logo-text { font-weight: 700; font-size: 13px; letter-spacing: -0.3px; }
+    .logo-sub  { font-size: 10px; color: var(--muted); font-weight: 400; }
+
+    .sidebar-section { padding: 8px 8px 4px; }
+    .sidebar-label {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      padding: 4px 8px 6px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 8px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 400;
+      transition: background 0.1s, color 0.1s;
+      user-select: none;
+    }
+    .nav-item:hover     { background: var(--bg); color: var(--text); }
+    .nav-item.active    { background: var(--bg); color: var(--text); font-weight: 500; }
+    .nav-item .icon     { width: 14px; height: 14px; opacity: 0.7; }
+    .nav-item.active .icon { opacity: 1; }
+
+    .badge {
+      margin-left: auto;
+      background: var(--border);
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 600;
+      padding: 1px 5px;
+      border-radius: 9999px;
+    }
+    .badge.green { background:#dcfce7; color:#15803d; }
+    .badge.amber { background:#fef3c7; color:#b45309; }
+    .badge.blue  { background:#dbeafe; color:#1d4ed8; }
+
+    /* ── Main ── */
+    .main {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Topbar ── */
+    .topbar {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .topbar-title { font-weight: 600; font-size: 14px; }
+    .topbar-sep   { color: var(--border2); font-size: 16px; }
+    .topbar-sub   { color: var(--muted); font-size: 13px; }
+    .topbar-right { margin-left: auto; display: flex; gap: 8px; align-items: center; }
+
+    /* ── Buttons ── */
+    .btn {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 5px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 12.5px;
+      font-weight: 500;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: background 0.12s, border-color 0.12s;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .btn-primary {
+      background: var(--accent); color: var(--accent-fg);
+      border-color: var(--accent);
+    }
+    .btn-primary:hover { background: #27272a; }
+
+    .btn-outline {
+      background: var(--surface); color: var(--text);
+      border-color: var(--border2);
+    }
+    .btn-outline:hover { background: var(--bg); }
+
+    /* Split button */
+    .split-btn { display: inline-flex; border-radius: var(--radius-sm); overflow: hidden; border: 1px solid var(--border2); }
+    .split-btn .btn { border-radius: 0; border: none; }
+    .split-btn .btn + .btn { border-left: 1px solid var(--border2); padding: 5px 8px; }
+
+    /* ── Content ── */
+    .content { padding: 24px; display: flex; flex-direction: column; gap: 20px; }
+
+    /* ── Cards ── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .card-header {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .card-title  { font-weight: 600; font-size: 13.5px; }
+    .card-desc   { font-size: 12px; color: var(--muted); }
+    .card-header-right { margin-left: auto; display: flex; gap: 6px; }
+    .card-body   { padding: 16px; }
+
+    /* ── Grid ── */
+    .grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
+    .grid-2 { display: grid; grid-template-columns: repeat(2,1fr); gap: 12px; }
+
+    /* ── Stat cards ── */
+    .stat {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+    }
+    .stat-label { font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; }
+    .stat-value { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; line-height: 1; }
+    .stat-sub   { font-size: 11px; color: var(--muted); margin-top: 4px; }
+    .stat-trend { display: inline-flex; align-items: center; gap: 2px; font-size: 11px; font-weight: 600; }
+    .stat-trend.up   { color: var(--green); }
+    .stat-trend.warn { color: var(--amber); }
+
+    /* ── Table ── */
+    .tbl { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+    .tbl thead th {
+      text-align: left;
+      padding: 8px 12px;
+      font-weight: 600;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      border-bottom: 1px solid var(--border);
+      background: var(--bg);
+    }
+    .tbl tbody tr { border-bottom: 1px solid var(--border); }
+    .tbl tbody tr:last-child { border-bottom: none; }
+    .tbl tbody tr:hover { background: var(--bg); }
+    .tbl tbody td { padding: 9px 12px; vertical-align: middle; }
+
+    .tag {
+      display: inline-flex; align-items: center;
+      padding: 2px 7px;
+      border-radius: 9999px;
+      font-size: 11px;
+      font-weight: 500;
+      border: 1px solid var(--border2);
+      color: var(--muted);
+      background: var(--bg);
+    }
+    .tag.green { background:#dcfce7; color:#15803d; border-color:#bbf7d0; }
+    .tag.amber { background:#fef3c7; color:#b45309; border-color:#fde68a; }
+    .tag.blue  { background:#dbeafe; color:#1d4ed8; border-color:#bfdbfe; }
+    .tag.red   { background:#fee2e2; color:#b91c1c; border-color:#fecaca; }
+    .tag.violet{ background:#ede9fe; color:#6d28d9; border-color:#ddd6fe; }
+
+    .progress-bar-wrap {
+      background: var(--border);
+      border-radius: 9999px;
+      height: 5px;
+      overflow: hidden;
+      flex: 1;
+    }
+    .progress-bar { height: 100%; border-radius: 9999px; background: var(--accent); transition: width 0.4s; }
+    .progress-bar.green  { background: var(--green); }
+    .progress-bar.amber  { background: var(--amber); }
+    .progress-bar.blue   { background: var(--blue); }
+
+    .progress-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .progress-row:last-child { margin-bottom: 0; }
+    .progress-label { width: 120px; font-size: 12px; color: var(--muted); flex-shrink: 0; }
+    .progress-pct   { width: 30px; text-align: right; font-size: 12px; font-weight: 600; flex-shrink: 0; }
+
+    /* ── Timeline ── */
+    .timeline { display: flex; flex-direction: column; gap: 0; }
+    .tl-item  { display: flex; gap: 12px; padding: 10px 0; position: relative; }
+    .tl-item:not(:last-child)::before {
+      content: '';
+      position: absolute;
+      left: 5px; top: 26px; bottom: -10px;
+      width: 1px;
+      background: var(--border);
+    }
+    .tl-dot {
+      width: 12px; height: 12px; border-radius: 50%;
+      border: 2px solid var(--accent);
+      background: var(--surface);
+      flex-shrink: 0;
+      margin-top: 3px;
+    }
+    .tl-dot.done  { background: var(--accent); }
+    .tl-dot.amber { border-color: var(--amber); }
+    .tl-dot.green { border-color: var(--green); background: var(--green); }
+    .tl-content {}
+    .tl-date  { font-size: 11px; color: var(--muted); font-weight: 500; }
+    .tl-title { font-size: 13px; font-weight: 500; }
+    .tl-desc  { font-size: 11.5px; color: var(--muted); margin-top: 2px; }
+
+    /* ── File list ── */
+    .file-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .file-row:last-child { border-bottom: none; }
+    .file-icon {
+      width: 30px; height: 30px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px;
+      flex-shrink: 0;
+    }
+    .file-name { font-size: 12.5px; font-weight: 500; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .file-meta { font-size: 11px; color: var(--muted); }
+    .file-actions { display: flex; gap: 4px; }
+
+    /* ── Links panel ── */
+    .link-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; }
+    .link-card {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      text-decoration: none;
+      color: var(--text);
+      background: var(--bg);
+      transition: border-color 0.12s, background 0.12s;
+    }
+    .link-card:hover { border-color: var(--border2); background: var(--surface); }
+    .link-card-title { font-size: 12.5px; font-weight: 600; }
+    .link-card-sub   { font-size: 11px; color: var(--muted); }
+    .link-card-icon  { font-size: 18px; margin-bottom: 2px; }
+
+    /* ── Divider ── */
+    .divider { height: 1px; background: var(--border); margin: 4px 0; }
+
+    /* ── Utils ── */
+    .flex { display: flex; }
+    .flex-col { display: flex; flex-direction: column; }
+    .gap-2 { gap: 8px; }
+    .gap-3 { gap: 12px; }
+    .items-center { align-items: center; }
+    .justify-between { justify-content: space-between; }
+    .text-muted { color: var(--muted); }
+    .text-sm { font-size: 12px; }
+    .font-medium { font-weight: 500; }
+    .font-semibold { font-weight: 600; }
+    .mt-1 { margin-top: 4px; }
+    .mt-2 { margin-top: 8px; }
+
+    /* ── Checkbox ── */
+    .check-item { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 8px; }
+    .check-item:last-child { margin-bottom: 0; }
+    .check-box {
+      width: 14px; height: 14px; flex-shrink: 0;
+      border: 1.5px solid var(--border2);
+      border-radius: 3px;
+      margin-top: 2px;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 9px;
+    }
+    .check-box.checked { background: var(--accent); border-color: var(--accent); color: white; }
+    .check-text { font-size: 12.5px; line-height: 1.4; }
+    .check-text.done { text-decoration: line-through; color: var(--muted); }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .grid-4 { grid-template-columns: repeat(2,1fr); }
+      .grid-3 { grid-template-columns: repeat(2,1fr); }
+      .link-grid { grid-template-columns: repeat(2,1fr); }
+    }
+  </style>
+</head>
+<body>
+<div class="shell">
+
+  <!-- ── Sidebar ── -->
+  <nav class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-mark">UM</div>
+      <div>
+        <div class="logo-text">Umbramed</div>
+        <div class="logo-sub">EIC Horizon 2026</div>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-label">Overview</div>
+      <a href="#overview" class="nav-item active">
+        <svg class="icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg>
+        Dashboard
+      </a>
+      <a href="#timeline" class="nav-item">
+        <svg class="icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="2" width="14" height="12" rx="1.5"/><path d="M1 5.5h14M5 2v3.5M11 2v3.5"/></svg>
+        Timeline
+      </a>
+      <a href="#tasks" class="nav-item">
+        <svg class="icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4h12M2 8h8M2 12h5"/></svg>
+        Tasks
+        <span class="badge amber">7</span>
+      </a>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-label">Project</div>
+      <a href="#docs" class="nav-item">
+        <svg class="icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 1h7l3 3v11H3V1z"/><path d="M10 1v3h3M5 7h6M5 10h4"/></svg>
+        Documents
+        <span class="badge">6</span>
+      </a>
+      <a href="#links" class="nav-item">
+        <svg class="icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 9a3.5 3.5 0 0 0 5 0l1.5-1.5a3.5 3.5 0 0 0-5-5L7 3.5M9 7a3.5 3.5 0 0 0-5 0L2.5 8.5a3.5 3.5 0 0 0 5 5L9 12.5"/></svg>
+        Quick Links
+      </a>
+      <a href="#team" class="nav-item">
+        <svg class="icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6" cy="5" r="2.5"/><path d="M1 13c0-2.76 2.24-5 5-5M11.5 10.5l1.5 1.5 3-3"/></svg>
+        Team / Roles
+      </a>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-label">Submission</div>
+      <a href="#funding" class="nav-item">
+        <svg class="icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1.5v13M4.5 4.5h5a2 2 0 0 1 0 4h-4a2 2 0 0 0 0 4H10"/></svg>
+        Funding Scope
+      </a>
+      <a href="#risks" class="nav-item">
+        <svg class="icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1L15 14H1L8 1zM8 6v4M8 11.5v.5"/></svg>
+        Risk Register
+        <span class="badge red" style="background:#fee2e2;color:#b91c1c;">2</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- ── Main ── -->
+  <div class="main">
+
+    <!-- Topbar -->
+    <header class="topbar">
+      <span class="topbar-title">Umbramed</span>
+      <span class="topbar-sep">/</span>
+      <span class="topbar-sub">EIC Accelerator — Horizon Europe 2026</span>
+      <div class="topbar-right">
+        <span class="tag green">● On track</span>
+        <div class="split-btn">
+          <a href="public/VALERIO_PLAN_ACCION_EJECUTIVO.md" class="btn btn-outline" target="_blank">Action Plan</a>
+          <button class="btn btn-outline" onclick="alert('PDF export would open from /public/')">▾</button>
+        </div>
+        <a href="https://eic.ec.europa.eu/eic-funding-opportunities/eic-accelerator_en" target="_blank" class="btn btn-primary">
+          EIC Portal ↗
+        </a>
+      </div>
+    </header>
+
+    <!-- Content -->
+    <div class="content">
+
+      <!-- ── Stats row ── -->
+      <div class="grid-4" id="overview">
+        <div class="stat">
+          <div class="stat-label">EIC Grant Target</div>
+          <div class="stat-value">€2.5M</div>
+          <div class="stat-sub">+ €15M equity option</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Submission Deadline</div>
+          <div class="stat-value">Oct 2026</div>
+          <div class="stat-sub">
+            <span class="stat-trend up">↑ 245 days remaining</span>
+          </div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Readiness Score</div>
+          <div class="stat-value">68%</div>
+          <div class="stat-sub"><span class="stat-trend warn">⚠ Clinical data pending</span></div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Documents Ready</div>
+          <div class="stat-value">6 / 9</div>
+          <div class="stat-sub">3 sections in draft</div>
+        </div>
+      </div>
+
+      <!-- ── Progress + Timeline ── -->
+      <div class="grid-2">
+
+        <!-- Progress -->
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Workstream Progress</div>
+              <div class="card-desc">EIC application components</div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="progress-row">
+              <div class="progress-label">Clinical Protocol</div>
+              <div class="progress-bar-wrap"><div class="progress-bar green" style="width:85%"></div></div>
+              <div class="progress-pct">85%</div>
+            </div>
+            <div class="progress-row">
+              <div class="progress-label">Tech Innovation</div>
+              <div class="progress-bar-wrap"><div class="progress-bar blue" style="width:75%"></div></div>
+              <div class="progress-pct">75%</div>
+            </div>
+            <div class="progress-row">
+              <div class="progress-label">Market Analysis</div>
+              <div class="progress-bar-wrap"><div class="progress-bar" style="width:60%"></div></div>
+              <div class="progress-pct">60%</div>
+            </div>
+            <div class="progress-row">
+              <div class="progress-label">Financial Model</div>
+              <div class="progress-bar-wrap"><div class="progress-bar amber" style="width:45%"></div></div>
+              <div class="progress-pct">45%</div>
+            </div>
+            <div class="progress-row">
+              <div class="progress-label">Team / Partners</div>
+              <div class="progress-bar-wrap"><div class="progress-bar green" style="width:90%"></div></div>
+              <div class="progress-pct">90%</div>
+            </div>
+            <div class="progress-row">
+              <div class="progress-label">Regulatory Path</div>
+              <div class="progress-bar-wrap"><div class="progress-bar amber" style="width:40%"></div></div>
+              <div class="progress-pct">40%</div>
+            </div>
+            <div class="progress-row">
+              <div class="progress-label">Video Pitch</div>
+              <div class="progress-bar-wrap"><div class="progress-bar blue" style="width:70%"></div></div>
+              <div class="progress-pct">70%</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Timeline -->
+        <div class="card" id="timeline">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Key Milestones</div>
+              <div class="card-desc">EIC Accelerator 2026 roadmap</div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="timeline">
+              <div class="tl-item">
+                <div class="tl-dot done"></div>
+                <div class="tl-content">
+                  <div class="tl-date">Feb 2026 ✓</div>
+                  <div class="tl-title">Dossier estratégico & Video script</div>
+                  <div class="tl-desc">EIC narrative, clinical protocol v1.2 completed</div>
+                </div>
+              </div>
+              <div class="tl-item">
+                <div class="tl-dot amber"></div>
+                <div class="tl-content">
+                  <div class="tl-date">Mar – Apr 2026</div>
+                  <div class="tl-title">Financial model & Market sizing</div>
+                  <div class="tl-desc">TAM/SAM/SOM analysis, 5-yr projections</div>
+                </div>
+              </div>
+              <div class="tl-item">
+                <div class="tl-dot"></div>
+                <div class="tl-content">
+                  <div class="tl-date">May – Jun 2026</div>
+                  <div class="tl-title">Clinical validation data</div>
+                  <div class="tl-desc">Phase I/II trial results & KOL endorsements</div>
+                </div>
+              </div>
+              <div class="tl-item">
+                <div class="tl-dot"></div>
+                <div class="tl-content">
+                  <div class="tl-date">Jul – Aug 2026</div>
+                  <div class="tl-title">Full application draft</div>
+                  <div class="tl-desc">Step 1 short application + Step 2 business plan</div>
+                </div>
+              </div>
+              <div class="tl-item">
+                <div class="tl-dot green"></div>
+                <div class="tl-content">
+                  <div class="tl-date">Oct 2026</div>
+                  <div class="tl-title">EIC Accelerator submission</div>
+                  <div class="tl-desc">Final submission + pitch video ready</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Documents table ── -->
+      <div class="card" id="docs">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Project Documents</div>
+            <div class="card-desc">All files in /public directory</div>
+          </div>
+          <div class="card-header-right">
+            <div class="split-btn">
+              <button class="btn btn-outline">Sort by date</button>
+              <button class="btn btn-outline">▾</button>
+            </div>
+          </div>
+        </div>
+        <div style="overflow-x:auto">
+          <table class="tbl">
+            <thead>
+              <tr>
+                <th>Document</th>
+                <th>Category</th>
+                <th>Status</th>
+                <th>Updated</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <div class="flex items-center gap-2">
+                    <div class="file-icon">📋</div>
+                    <div>
+                      <div class="font-medium" style="font-size:12.5px">VALERIO_PLAN_ACCION_EJECUTIVO</div>
+                      <div class="text-muted text-sm">.md — 8.6 KB</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="tag blue">Strategy</span></td>
+                <td><span class="tag green">Ready</span></td>
+                <td class="text-muted text-sm">Feb 17, 2026</td>
+                <td>
+                  <div class="split-btn">
+                    <a href="public/VALERIO_PLAN_ACCION_EJECUTIVO.md" target="_blank" class="btn btn-outline">Open</a>
+                    <button class="btn btn-outline">▾</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="flex items-center gap-2">
+                    <div class="file-icon">🏥</div>
+                    <div>
+                      <div class="font-medium" style="font-size:12.5px">CLINICAL_PROTOCOL_UMBRAMED</div>
+                      <div class="text-muted text-sm">.md — 21.9 KB</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="tag violet">Clinical</span></td>
+                <td><span class="tag green">Ready</span></td>
+                <td class="text-muted text-sm">Feb 17, 2026</td>
+                <td>
+                  <div class="split-btn">
+                    <a href="public/CLINICAL_PROTOCOL_UMBRAMED.md" target="_blank" class="btn btn-outline">Open</a>
+                    <button class="btn btn-outline">▾</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="flex items-center gap-2">
+                    <div class="file-icon">🔬</div>
+                    <div>
+                      <div class="font-medium" style="font-size:12.5px">UMBRAMED_Clinical_Protocol_v1.2</div>
+                      <div class="text-muted text-sm">.md — 18.2 KB</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="tag violet">Clinical</span></td>
+                <td><span class="tag green">Ready</span></td>
+                <td class="text-muted text-sm">Feb 17, 2026</td>
+                <td>
+                  <div class="split-btn">
+                    <a href="public/UMBRAMED_Clinical_Protocol_v1.2.md" target="_blank" class="btn btn-outline">Open</a>
+                    <button class="btn btn-outline">▾</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="flex items-center gap-2">
+                    <div class="file-icon">🎬</div>
+                    <div>
+                      <div class="font-medium" style="font-size:12.5px">VALERIO_VIDEO_SCRIPT_EIC</div>
+                      <div class="text-muted text-sm">.md — 9.6 KB</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="tag blue">Pitch</span></td>
+                <td><span class="tag amber">In Review</span></td>
+                <td class="text-muted text-sm">Feb 17, 2026</td>
+                <td>
+                  <div class="split-btn">
+                    <a href="public/VALERIO_VIDEO_SCRIPT_EIC.md" target="_blank" class="btn btn-outline">Open</a>
+                    <button class="btn btn-outline">▾</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="flex items-center gap-2">
+                    <div class="file-icon">🌐</div>
+                    <div>
+                      <div class="font-medium" style="font-size:12.5px">VIDEO_SCRIPT_UMBRAMED_EN</div>
+                      <div class="text-muted text-sm">.md — 9.6 KB</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="tag blue">Pitch</span></td>
+                <td><span class="tag amber">In Review</span></td>
+                <td class="text-muted text-sm">Feb 17, 2026</td>
+                <td>
+                  <div class="split-btn">
+                    <a href="public/VIDEO_SCRIPT_UMBRAMED_EN.md" target="_blank" class="btn btn-outline">Open</a>
+                    <button class="btn btn-outline">▾</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="flex items-center gap-2">
+                    <div class="file-icon">🇪🇸</div>
+                    <div>
+                      <div class="font-medium" style="font-size:12.5px">VIDEO_SCRIPT_UMBRAMED_ES</div>
+                      <div class="text-muted text-sm">.md — 10.2 KB</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="tag blue">Pitch</span></td>
+                <td><span class="tag amber">In Review</span></td>
+                <td class="text-muted text-sm">Feb 17, 2026</td>
+                <td>
+                  <div class="split-btn">
+                    <a href="public/VIDEO_SCRIPT_UMBRAMED_ES.md" target="_blank" class="btn btn-outline">Open</a>
+                    <button class="btn btn-outline">▾</button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ── Tasks + Links ── -->
+      <div class="grid-2">
+
+        <!-- Tasks -->
+        <div class="card" id="tasks">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Open Action Items</div>
+              <div class="card-desc">Critical path to EIC submission</div>
+            </div>
+            <div class="card-header-right">
+              <span class="badge amber">7 pending</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="check-item">
+              <div class="check-box checked">✓</div>
+              <div class="check-text done">Clinical protocol v1.2 — complete narrative</div>
+            </div>
+            <div class="check-item">
+              <div class="check-box checked">✓</div>
+              <div class="check-text done">EIC video script ES + EN</div>
+            </div>
+            <div class="check-item">
+              <div class="check-box"></div>
+              <div class="check-text">Complete financial model with 5-yr projections</div>
+            </div>
+            <div class="check-item">
+              <div class="check-box"></div>
+              <div class="check-text">TAM/SAM/SOM market sizing (radiology AI segment)</div>
+            </div>
+            <div class="check-item">
+              <div class="check-box"></div>
+              <div class="check-text">Obtain KOL letters of support (min. 2 hospitals)</div>
+            </div>
+            <div class="check-item">
+              <div class="check-box"></div>
+              <div class="check-text">MDR regulatory pathway assessment</div>
+            </div>
+            <div class="check-item">
+              <div class="check-box"></div>
+              <div class="check-text">Confirm Phase I pilot data from Clínica Vistahermosa</div>
+            </div>
+            <div class="check-item">
+              <div class="check-box"></div>
+              <div class="check-text">Record & edit EIC pitch video (3 min)</div>
+            </div>
+            <div class="check-item">
+              <div class="check-box"></div>
+              <div class="check-text">EIC Step 1 short application — first draft</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="card" id="links">
+          <div class="card-header">
+            <div class="card-title">Quick Links</div>
+            <div class="card-desc">External resources &amp; portals</div>
+          </div>
+          <div class="card-body">
+            <div class="link-grid">
+              <a class="link-card" href="https://eic.ec.europa.eu/eic-funding-opportunities/eic-accelerator_en" target="_blank">
+                <div class="link-card-icon">🇪🇺</div>
+                <div class="link-card-title">EIC Accelerator</div>
+                <div class="link-card-sub">Official portal</div>
+              </a>
+              <a class="link-card" href="https://eic.ec.europa.eu/apply-funding/apply-eic-funding_en" target="_blank">
+                <div class="link-card-icon">📝</div>
+                <div class="link-card-title">Apply for Funding</div>
+                <div class="link-card-sub">EIC submission</div>
+              </a>
+              <a class="link-card" href="https://ec.europa.eu/info/funding-tenders/opportunities/portal/" target="_blank">
+                <div class="link-card-icon">🔍</div>
+                <div class="link-card-title">Funding Portal</div>
+                <div class="link-card-sub">Horizon Europe</div>
+              </a>
+              <a class="link-card" href="public/CLINICAL_PROTOCOL_UMBRAMED.md" target="_blank">
+                <div class="link-card-icon">🏥</div>
+                <div class="link-card-title">Clinical Protocol</div>
+                <div class="link-card-sub">Umbramed v1.2</div>
+              </a>
+              <a class="link-card" href="public/VALERIO_PLAN_ACCION_EJECUTIVO.md" target="_blank">
+                <div class="link-card-icon">🗺️</div>
+                <div class="link-card-title">Action Plan</div>
+                <div class="link-card-sub">Valerio 2026</div>
+              </a>
+              <a class="link-card" href="Umbramed Dossier Estratégico EIC 2026 Alta Probabilidad.pdf" target="_blank">
+                <div class="link-card-icon">📄</div>
+                <div class="link-card-title">Dossier EIC PDF</div>
+                <div class="link-card-sub">Strategic brief</div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Risk Register ── -->
+      <div class="card" id="risks">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Risk Register</div>
+            <div class="card-desc">Active risks requiring mitigation</div>
+          </div>
+          <div class="card-header-right">
+            <span class="badge red" style="background:#fee2e2;color:#b91c1c;">2 High</span>
+          </div>
+        </div>
+        <div style="overflow-x:auto">
+          <table class="tbl">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Risk</th>
+                <th>Area</th>
+                <th>Severity</th>
+                <th>Mitigation</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="text-muted text-sm">R-01</td>
+                <td class="font-medium" style="font-size:12.5px">Insufficient clinical pilot data by May 2026</td>
+                <td><span class="tag violet">Clinical</span></td>
+                <td><span class="tag red">High</span></td>
+                <td class="text-muted text-sm">Engage Clínica Vistahermosa Q1, accelerate protocol</td>
+              </tr>
+              <tr>
+                <td class="text-muted text-sm">R-02</td>
+                <td class="font-medium" style="font-size:12.5px">EIC scoring criteria changes for 2026 call</td>
+                <td><span class="tag blue">Strategy</span></td>
+                <td><span class="tag red">High</span></td>
+                <td class="text-muted text-sm">Monitor EIC announcements monthly, hire EIC coach</td>
+              </tr>
+              <tr>
+                <td class="text-muted text-sm">R-03</td>
+                <td class="font-medium" style="font-size:12.5px">MDR CE mark timeline delayed</td>
+                <td><span class="tag amber">Regulatory</span></td>
+                <td><span class="tag amber">Medium</span></td>
+                <td class="text-muted text-sm">Engage notified body H1 2026, frame as pre-CE in application</td>
+              </tr>
+              <tr>
+                <td class="text-muted text-sm">R-04</td>
+                <td class="font-medium" style="font-size:12.5px">Key team member availability</td>
+                <td><span class="tag">Team</span></td>
+                <td><span class="tag">Low</span></td>
+                <td class="text-muted text-sm">Define FTE commitments in consortium agreement</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ── Funding Scope ── -->
+      <div class="card" id="funding">
+        <div class="card-header">
+          <div class="card-title">Funding Scope — EIC Accelerator 2026</div>
+          <div class="card-desc">Grant instrument breakdown</div>
+        </div>
+        <div class="card-body">
+          <div class="grid-3">
+            <div style="padding:12px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm)">
+              <div class="stat-label">Grant Component</div>
+              <div class="stat-value">€2.5M</div>
+              <div class="stat-sub">Non-dilutive, 70% of eligible costs</div>
+            </div>
+            <div style="padding:12px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm)">
+              <div class="stat-label">Equity Option</div>
+              <div class="stat-value">€15M</div>
+              <div class="stat-sub">EIC Fund investment (optional)</div>
+            </div>
+            <div style="padding:12px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm)">
+              <div class="stat-label">TRL Target</div>
+              <div class="stat-value">TRL 6→8</div>
+              <div class="stat-sub">Prototype to market-ready system</div>
+            </div>
+          </div>
+          <div class="mt-2" style="font-size:12px;color:var(--muted);border-top:1px solid var(--border);padding-top:12px;margin-top:12px">
+            <strong style="color:var(--text)">Use of funds:</strong> Clinical validation trials (40%), CE certification &amp; regulatory (20%), AI model commercialization (25%), team scale-up (15%). Target market: Radiology AI for oncological ultrasound — €4.2B TAM (2028).
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Footer ── -->
+      <div style="text-align:center;color:var(--muted);font-size:11px;padding:8px 0 16px;">
+        Umbramed — EIC Accelerator 2026 Project Hub · Updated Feb 17, 2026 · <a href="https://github.com/samihalawa" style="color:inherit">samihalawa</a>
+      </div>
+
+    </div><!-- /content -->
+  </div><!-- /main -->
+</div><!-- /shell -->
+</body>
+</html>
