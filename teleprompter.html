@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Teleprompter — Valerio</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      height: 100%; width: 100%;
+      background: #0a0a0a; color: #f0f0f0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+      overflow: hidden;
+    }
+    body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto 1fr auto;
+      gap: 0;
+      height: 100vh;
+      padding: 0;
+    }
+
+    /* header bar */
+    header {
+      grid-column: 1 / -1;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 28px 8px;
+      border-bottom: 1px solid #222;
+      background: #111;
+    }
+    .hdr-title { font-size: 13px; font-weight: 700; color: #888; letter-spacing: .1em; text-transform: uppercase; }
+    .hdr-name  { font-size: 13px; color: #4ade80; font-weight: 700; }
+    .hdr-back  {
+      font-size: 12px; color: #555; cursor: pointer;
+      text-decoration: none; padding: 4px 10px;
+      border: 1px solid #333; border-radius: 5px;
+    }
+    .hdr-back:hover { color: #999; border-color: #555; }
+
+    /* columns */
+    .col {
+      padding: 20px 28px 16px;
+      display: flex; flex-direction: column; gap: 14px;
+      overflow: hidden;
+      border-right: 1px solid #1a1a1a;
+    }
+    .col:last-of-type { border-right: none; }
+
+    /* each block */
+    .block {}
+    .ts {
+      font-size: 10.5px; font-weight: 700; letter-spacing: .07em;
+      color: #4ade80; text-transform: uppercase; margin-bottom: 5px;
+    }
+    .line {
+      font-size: clamp(13px, 1.55vw, 22px);
+      line-height: 1.55;
+      color: #f0f0f0;
+      font-weight: 400;
+    }
+    .line strong {
+      color: #fff;
+      font-weight: 700;
+    }
+
+    /* footer */
+    footer {
+      grid-column: 1 / -1;
+      text-align: center; padding: 8px;
+      border-top: 1px solid #1a1a1a;
+      background: #111;
+      font-size: 11px; color: #333;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <span class="hdr-title">Script EIC · Valerio</span>
+  <span class="hdr-name">Dr. Valerio Trigos — solo sus líneas</span>
+  <a class="hdr-back" href="index.html">← Volver</a>
+</header>
+
+<!-- COLUMNA IZQUIERDA -->
+<div class="col">
+
+  <div class="block">
+    <div class="ts">0:00 — 0:12</div>
+    <div class="line">
+      "Me llamo <strong>Valerio Trigos</strong>. Soy médico de familia en el sistema público andaluz. Gestiono <strong>6.500 pacientes.</strong><br><br>
+      Y cada día, paso entre 30 y 45 minutos en tareas que una máquina podría hacer en segundos."
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="ts">0:12 — 0:22</div>
+    <div class="line">
+      "Renovar recetas. Copiar resultados de laboratorio. Rellenar formularios de derivación.<br><br>
+      Mientras mis pacientes esperan."
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="ts">0:22 — 0:35</div>
+    <div class="line">
+      "<strong>Seis mil quinientos pacientes.</strong> Ese es mi cupo. Y simplemente no tengo suficientes horas en el día para darles la atención que merecen.<br><br>
+      Este es un problema que afecta a <strong>1,9 millones de médicos en Europa.</strong>"
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="ts">0:35 — 0:50</div>
+    <div class="line">
+      "Por eso construimos <strong>UMBRAMED.</strong><br><br>
+      Es un asistente clínico potenciado por inteligencia artificial que se integra directamente con sistemas de historia clínica electrónica existentes como <strong>Diraya.</strong>"
+    </div>
+  </div>
+
+</div>
+
+<!-- COLUMNA DERECHA -->
+<div class="col">
+
+  <div class="block">
+    <div class="ts">1:15 — 1:30</div>
+    <div class="line">
+      "¿Qué hace diferente a UMBRAMED?<br><br>
+      Yo no soy un consultor que visita un hospital una vez al año. Uso el sistema <strong>cada día.</strong> Sé exactamente dónde están los cuellos de botella porque <strong>vivo dentro de ellos.</strong>"
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="ts">1:30 — 1:45</div>
+    <div class="line">
+      "Esta es mi interfaz de trabajo real. Cada médico en el sistema público andaluz usa esta interfaz. <strong>44.000 médicos. 8,5 millones de pacientes.</strong><br><br>
+      Y puedo decirte exactamente dónde la IA puede <strong>ahorrar 15 minutos por consulta.</strong>"
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="ts">1:45 — 1:50</div>
+    <div class="line">
+      "Ya tenemos un protocolo de estudio diseñado. Casos y controles. Con una cohorte de <strong>6.500 pacientes</strong> para validación clínica."
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="ts">2:25 — 2:40</div>
+    <div class="line">
+      "Cada día que pasa, pierdo tiempo que podría dedicar a mis pacientes.<br>
+      Pacientes con <strong>diabetes</strong> que necesitan control. <strong>Ancianos</strong> con insuficiencia cardíaca. <strong>Niños</strong> con asma.<br><br>
+      Mientras yo relleno formularios."
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="ts">2:55 — 3:00 · CIERRE</div>
+    <div class="line" style="font-size: clamp(16px, 2vw, 28px); font-weight: 700; color: #4ade80;">
+      "Para que puedan hacer lo que realmente importa."
+    </div>
+  </div>
+
+</div>
+
+<footer>Pulsa F11 para pantalla completa · Solo líneas de Valerio · Sami no aparece aquí</footer>
+
+</body>
+</html>
