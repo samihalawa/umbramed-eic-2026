@@ -93,6 +93,11 @@
 
 #### Practical blocker:
 - This is only a realistic submission if the Spanish entity is an eligible SME with filed accounts and the two-company consortium can assemble the required Eurostars application immediately.
+- Local machine review on 17 March 2026 surfaced only strategy notes and backlog references, not the proof pack Eurostars needs.
+- `Corporate Structure & Branding (Company Registration)` in the Notion export is only a lesson stub.
+- `empleadosai` in the Notion kanban is explicitly marked `Backlog` and `Speculative`.
+- No local filing evidence was found for latest Spanish annual accounts, applicant incorporation proof for the exact pair, or a draft Eurostars submission package.
+- **Decision**: Do not treat Eurostars as ready unless company-accounting evidence is found before the deadline.
 
 ---
 
@@ -111,6 +116,8 @@
 
 #### Practical blocker:
 - Current repo does not show a ready second-country research/education partner or a submission-ready maturity evidence pack for IML 6, so this is open but not immediate.
+- Local machine review on 17 March 2026 did not surface a committed research or education partner from another country, an IML 6 evidence dossier, or a draft package comparable to the AI Champions materials.
+- **Decision**: Keep EIT Health in the next-wave pipeline, not the immediate submission queue.
 
 ---
 
@@ -175,6 +182,24 @@
 
 6. **Monitor EIC Step 1**
    - No new submission action required unless invited to the next stage
+
+---
+
+## Evidence From Local Machine Review (17 March 2026)
+
+Strongest off-repo sources reviewed today:
+
+- `.../NOTION-FULL-EXPORT-2026-3-16/Private & Shared/WhatsApp Chat - VALERIO ALUMNO AI Umbramed (3) Imp/00000302-Hoja_de_Ruta_de_Financiacion_Definitiva_para_Valerio_.pdf`
+- `.../NOTION-FULL-EXPORT-2026-3-16/Private & Shared/WhatsApp Chat - VALERIO ALUMNO AI Umbramed (3) Imp/00000303-Oportunidades_de_Financiacion_para_el_Proyecto_de_Salud_Digital_de_Valerio_(1).pdf`
+- `.../NOTION-FULL-EXPORT-2026-3-16/Private & Shared/WhatsApp Chat - VALERIO ALUMNO AI Umbramed (3) Imp/00000304-Valerio_Salud_Digital___Financiacion_Estrategica.pdf`
+- `.../NOTION-FULL-EXPORT-2026-3-16/Umbramed/.../Valerio's AI Course/Corporate Structure & Branding (Company Registration)...`
+- `.../NOTION-FULL-EXPORT-2026-3-16/Private & Shared/Cloudflare Projects Kanban/empleadosai ... .md`
+
+What those sources changed:
+
+- They confirm prior strategic thinking around Spanish grants, ENISA, RedIA, AES, and future EU expansion.
+- They do **not** provide hidden submission-ready evidence for Eurostars, EIT Health, or CARE-03.
+- They reinforce that `AI Champions` remains the only remaining application lane already assembled to near-submit level.
 
 ---
 
