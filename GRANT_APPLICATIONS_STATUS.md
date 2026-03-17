@@ -71,6 +71,49 @@
 
 ---
 
+### 4. Eurostars Call 10 (Eureka Network) 🟡 LIVE BUT FAST-TURNAROUND
+- **Programme**: Eurostars-3 Call 10
+- **Status**: Open now
+- **Window**: 16 January 2026 to 19 March 2026, 14:00 Brussels time
+- **Fit**: Potentially strong if Agents AI Ltd and the Spanish SME are both eligible and independent
+- **Why it matters**: International SME R&D project, health AI is eligible, and both Spain and the United Kingdom have national funding allocated for this call
+
+#### Key eligibility points from official sources:
+- Consortium must be led by an innovative SME from a Eurostars country
+- Consortium must include at least two independent entities from at least two Eurostars countries
+- At least one organisation must come from an EU Member State or Horizon Europe Associated Country
+- SME share of the budget must be at least 50% of total project cost
+- No single participant or country can carry more than 70% of total budget
+- Project duration must be 36 months or less
+- Civil applications only
+
+#### Country-specific funding notes:
+- **United Kingdom**: Innovate UK funds SME R&D costs up to 60%; UK funded participants must be active at Companies House for at least 12 months before the deadline
+- **Spain**: CDTI funds Spanish SMEs up to 60% for small companies or 50% for medium-sized companies, possibly up to 70% if national budget allows; the Spanish SME must have deposited at least the latest annual accounts by the deadline
+
+#### Practical blocker:
+- This is only a realistic submission if the Spanish entity is an eligible SME with filed accounts and the two-company consortium can assemble the required Eurostars application immediately.
+
+---
+
+### 5. EIT Health Innovation Validation Call 2026 🟡 OPEN BUT CONSORTIUM-BUILD
+- **Status**: Open
+- **Opens**: 25 February 2026
+- **Closes**: 6 May 2026
+- **Funding**: Up to EUR 850,000 per project, up to 50% of total project budget
+- **Fit**: Strong thematic fit for UMBRAMED if the product is mature enough for clinical validation and regulatory preparation
+
+#### Official eligibility highlights:
+- Consortium of at least two organisations from different countries
+- Consortium must represent at least two sides of the Knowledge Triangle: industry, research, education
+- Commercialising company must lead
+- Solution must be a digital or AI-enabled medical device at Innovation Maturity Level 6, aiming for IML 7 by project end
+
+#### Practical blocker:
+- Current repo does not show a ready second-country research/education partner or a submission-ready maturity evidence pack for IML 6, so this is open but not immediate.
+
+---
+
 ## Pending / Future Opportunities
 
 ### 3. EIC Pathfinder Open 2026
@@ -112,16 +155,25 @@
    - Upload the 4 prepared appendix PDFs from `output/pdf/`
    - Complete portal submission after login
 
-2. **Find 3rd consortium partner** for CARE-03 (from a 3rd country)
+2. **Attempt Eurostars Call 10 only if both SME entities are eligible today**
+   - Confirm the Spanish company is an SME with filed latest annual accounts
+   - Confirm independence of the UK and Spanish entities
+   - Build and submit only if those legal/financial checks pass before 19 March 2026
+
+3. **Find 3rd consortium partner** for CARE-03 (from a 3rd country)
    - Post Partner Search announcement on EU F&T Portal
    - Reach out to health informatics research groups in Germany, Italy, Netherlands, or Portugal
 
-3. **Turn CARE-03 from blocked to eligible**
+4. **Assess EIT Health Innovation Validation Call 2026 as the next serious option**
+   - Requires a different-country research or education partner and IML 6 evidence
+   - Strong fit, but not ready from current repo assets alone
+
+5. **Turn CARE-03 from blocked to eligible**
    - Keep `CARE03_PARTB_DRAFT.md` as the working narrative
    - Finalise budget and ethics only after the third partner is confirmed
    - Do not treat CARE-03 as ready to submit before consortium eligibility exists
 
-4. **Monitor EIC Step 1**
+6. **Monitor EIC Step 1**
    - No new submission action required unless invited to the next stage
 
 ---
